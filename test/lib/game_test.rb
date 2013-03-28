@@ -31,10 +31,9 @@ class TestGame < MiniTest::Unit::TestCase
     end
   end
 
-  def test_pick_side_and_start_first_move
-    skip
+  def test_pick_side_and_with_wrong_move
     f = StringIO.new
-    withIO(StringIO.new("o\nd\n3\n"), f) do
+    withIO(StringIO.new("o\nd\n3\nexit\n"), f) do
       out, err = capture_io do
         @game.start
       end
