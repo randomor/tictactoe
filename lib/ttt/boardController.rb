@@ -1,11 +1,12 @@
 module TTT
   class BoardController
-    attr_reader :current_mover
+    attr_reader :current_mover, :game_status
 
-    def initialize(states_array=[0,0,0,0,0,0,0,0,0], first_mover=SIDE_X)
+    def initialize(states_array=[0,0,0,0,0,0,0,0,0], user_side=SIDE_X)
       @states = states_array
-      @first_mover = first_mover
-      @current_mover = @first_mover
+      @user_side = user_side
+      @current_mover = SIDE_X
+      @game_status = :Playing
       @board = <<-board.gsub(/^\s+/, '')
         ┌===========┐
         ¦ 1 | 2 | 3 ¦
@@ -18,13 +19,31 @@ module TTT
     end
 
     def next_move(position)
-      index = position-1 if position.between?(1, 9)
+      if position.between?(1, 9)
+        index = position-1 
+      else
+        raise Errors::InvalidMoveError
+      end
+
       if @states[index] != 0
         raise Errors::InvalidMoveError
       else
         @states[index] = @current_mover
+        update_game_status
         switch_current_mover
       end
+    end
+
+    def next_computer_move
+      if @gamer_side == @current_mover
+        raise Errors::InvalidMoveError
+      else
+        next_move(@states.index(0)+1) #random computer move
+      end
+    end
+
+    def update_game_status
+      @game_status = :Playing
     end
 
     def switch_current_mover
@@ -34,7 +53,7 @@ module TTT
     def board
       @states.each_with_index do |s, i|
         index_string = (i+1).to_s
-        @board.sub!(index_string, s) if [SIDE_X, SIDE_O].include?(s)
+        @board.sub!(index_string, s) if BOTH_SIDES.include?(s)
       end
       @board
     end

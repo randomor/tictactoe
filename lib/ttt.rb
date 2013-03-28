@@ -1,4 +1,4 @@
 require 'ttt/game'
-require 'ttt/board'
+require 'ttt/boardController'
 require 'ttt/errors'
 require 'ttt/constants'

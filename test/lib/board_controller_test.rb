@@ -8,6 +8,7 @@ module TTT
     def test_board_draws
       assert_respond_to(@boardController, :board)
       assert_equal(@boardController.current_mover, SIDE_X)
+      assert_equal(@boardController.game_status, :Playing)
     end
 
     def test_draws_well
@@ -55,6 +56,42 @@ module TTT
       end
       assert_equal(SIDE_O, @boardController.current_mover)
       assert_match(board, @boardController.board)
+      assert_equal(@boardController.game_status, :Playing)
+    end
+
+    def test_next_computer_move
+      start_board = <<-board.gsub(/^\s+/, '')
+        ┌===========┐
+        ¦ 1 | x | 3 ¦
+        ¦——— ——— ———¦
+        ¦ 4 | 5 | 6 ¦
+        ¦––– ––– –––¦
+        ¦ 7 | 8 | 9 ¦
+        ¦===========¦
+      board
+      @boardController.next_move(2)
+      assert_match(start_board, @boardController.board)
+      end_board = <<-board.gsub(/^\s+/, '')
+        ┌===========┐
+        ¦ o | x | 3 ¦
+        ¦——— ——— ———¦
+        ¦ 4 | 5 | 6 ¦
+        ¦––– ––– –––¦
+        ¦ 7 | 8 | 9 ¦
+        ¦===========¦
+      board
+      @boardController.next_computer_move
+      assert_match(end_board, @boardController.board)
+    end
+
+    def test_displays_right_status_when_o_won
+      skip
+      @boardController.next_move(3)
+      @boardController.next_move(2)
+      @boardController.next_move(5)
+      @boardController.next_move(1)
+      @boardController.next_move(7)
+      assert_equal(:X_Won, @boardController.game_status)
     end
   end
 end

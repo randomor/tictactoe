@@ -35,4 +35,17 @@ class TestGame < MiniTest::Unit::TestCase
       assert_match(/You picked 'o'/, out)
     end
   end
+
+  def test_pick_side_and_start_first_move
+    skip
+    f = StringIO.new
+    withIO(StringIO.new("o\nd\n3\n"), f) do
+      out, err = capture_io do
+        @game.start
+      end
+      assert_match(/You picked 'o'/, out)
+      assert_match(/next move?/, out)
+      assert_match(/not a valid move! Please try again/, out)
+    end
+  end
 end
