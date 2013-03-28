@@ -2,17 +2,12 @@ require 'test_helper'
 
 class TestGame < MiniTest::Unit::TestCase
   def setup
-    @boardController = TTT::BoardController.new()
-    @game = TTT::Game.new(@boardController)
-  end
-
-  def test_that_board_exists
-    assert_equal @game.boardController, @boardController
+    @game = TTT::Game.new
   end
 
   def test_starts_the_game_with_pompt
     f = StringIO.new
-    withIO(StringIO.new("x\n"), f) do
+    withIO(StringIO.new("x\nexit\n"), f) do
       out, err = capture_io do
         @game.start
       end
@@ -25,7 +20,7 @@ class TestGame < MiniTest::Unit::TestCase
 
   def test_starts_the_game_with_pompt_and_wrong_pick
     f = StringIO.new
-    withIO(StringIO.new("H\no\n"), f) do
+    withIO(StringIO.new("H\no\nexit\n"), f) do
       out, err = capture_io do
         @game.start
       end

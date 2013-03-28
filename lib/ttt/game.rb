@@ -2,33 +2,37 @@ module TTT
   class Game
     attr_reader :boardController, :side
 
-    def initialize(boardController=BoardController.new)
-      @boardController  = boardController
-      @side             = SIDE_X
+    def initialize
+      @side = SIDE_X
+      @exiting = false
     end
 
     def start
       start_prompt
       get_side_from_user
-      display_board
+      start_playing
     end
 
     def start_playing
-      if @boardController.game_status != :Playing
-        display_game_result
-      else
+      @boardController = BoardController.new(@side)
+      until (@boardController.game_status != :Playing) || @exiting
         display_board
-        ask_for_next_move 
+        ask_user_for_next_move 
       end
+      display_game_result unless @exiting
     end
 
     def display_board
       puts @boardController.board
     end
 
-    def ask_for_next_move
-      puts "What's your next move? Type in the position"
+    def ask_user_for_next_move
+      puts "What's your next move? Type in the position.(Type 'exit' to quit)"
       input = $stdin.gets
+      if input != nil && (input.chomp == 'exit')
+        @exiting = true
+        return
+      end
       if input != nil && input.length != 1
         input = input.chomp.downcase 
       else
@@ -44,7 +48,7 @@ module TTT
 
     def show_invalid_move_prompt
       puts "That was not a valid move! Please try again"
-      ask_for_next_move
+      ask_user_for_next_move
     end
 
     def get_side_from_user

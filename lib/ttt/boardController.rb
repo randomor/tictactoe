@@ -2,7 +2,7 @@ module TTT
   class BoardController
     attr_reader :current_mover, :game_status
 
-    def initialize(states_array=[0,0,0,0,0,0,0,0,0], user_side=SIDE_X)
+    def initialize(user_side=SIDE_X, states_array=[0,0,0,0,0,0,0,0,0])
       @states = states_array
       @user_side = user_side
       @current_mover = SIDE_X
@@ -29,7 +29,7 @@ module TTT
         raise Errors::InvalidMoveError
       else
         @states[index] = @current_mover
-        update_game_status
+        update_game_status(@current_mover)
         switch_current_mover
       end
     end
@@ -46,8 +46,9 @@ module TTT
       @states.index(0)+1 #random computer move
     end
 
-    def update_game_status
+    def update_game_status(current_mover)
       @game_status = :Playing
+      #TODO
     end
 
     def switch_current_mover
