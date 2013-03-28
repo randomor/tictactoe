@@ -38,8 +38,12 @@ module TTT
       if @gamer_side == @current_mover
         raise Errors::InvalidMoveError
       else
-        next_move(@states.index(0)+1) #random computer move
+        next_move(calculate_computer_move)
       end
+    end
+
+    def calculate_computer_move
+      @states.index(0)+1 #random computer move
     end
 
     def update_game_status
