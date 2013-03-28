@@ -17,23 +17,38 @@ module TTT
       @board_controller = BoardController.new(@side)
       if @side == SIDE_O
         computer_move
+      else
+        user_move
       end
-      until (@board_controller.game_status != :Playing) || @exiting
-        display_board
-        ask_user_for_next_move 
-      end
-      display_game_result unless @exiting
     end
 
     def display_board
       puts @board_controller.board
     end
 
-    def computer_move
+    def user_move
+      unless (@board_controller.game_status != :Playing) || @exiting
+        display_board
+        ask_user_for_next_move
+      else
+        display_game_result unless @exiting
+      end
+    end
 
+    def display_game_result
+      puts @board_controller.game_status
+    end
+
+    def computer_move
+      puts ">Computer's turn:"
+      puts "Computer thinking..."
+      @board_controller.next_computer_move
+      puts "Computer moved."
+      user_move
     end
 
     def ask_user_for_next_move
+      puts ">Your turn:"
       puts "What's your next move? Type in the position.(Type 'exit' to quit)"
       input = $stdin.gets
       if input != nil && (input.chomp == 'exit')
@@ -46,8 +61,10 @@ module TTT
         show_invalid_move_prompt
         return
       end
+      #Refactor: move this to a method...
       begin
         @board_controller.next_move(input.to_i)
+        computer_move
       rescue Errors::InvalidMoveError
         show_invalid_move_prompt
       end
