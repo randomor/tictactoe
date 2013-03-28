@@ -42,4 +42,17 @@ class TestGame < MiniTest::Unit::TestCase
       assert_match(/not a valid move! Please try again/, out)
     end
   end
+
+  def test_computer_move_after_user
+    f = StringIO.new
+    withIO(StringIO.new("o\nexit\n"), f) do
+      out, err = capture_io do
+        @game.start
+      end
+      assert_match(/Wanna play/, out)
+      assert_match(/Which side/, out)
+      assert_match(/You picked 'o'/, out)
+      assert_match(/Computer moved/, out)
+    end
+  end
 end

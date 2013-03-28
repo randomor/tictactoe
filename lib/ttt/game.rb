@@ -14,8 +14,11 @@ module TTT
     end
 
     def start_playing
-      @boardController = BoardController.new(@side)
-      until (@boardController.game_status != :Playing) || @exiting
+      @board_controller = BoardController.new(@side)
+      if @side == SIDE_O
+        computer_move
+      end
+      until (@board_controller.game_status != :Playing) || @exiting
         display_board
         ask_user_for_next_move 
       end
@@ -23,7 +26,11 @@ module TTT
     end
 
     def display_board
-      puts @boardController.board
+      puts @board_controller.board
+    end
+
+    def computer_move
+
     end
 
     def ask_user_for_next_move
@@ -40,7 +47,7 @@ module TTT
         return
       end
       begin
-        @boardController.next_move(input.to_i)
+        @board_controller.next_move(input.to_i)
       rescue Errors::InvalidMoveError
         show_invalid_move_prompt
       end
