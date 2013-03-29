@@ -16,7 +16,7 @@ module TTT
 
     def test_pick_last_empty_position
       @ai.states = [SIDE_O,SIDE_X,SIDE_O,SIDE_X,SIDE_X,SIDE_O,0,SIDE_O,SIDE_X]
-      assert_equal(6, @ai.pick_winning_index)
+      assert_equal(6, @ai.pick_last_position)
     end
 
     def test_pick_horizontal_winning_position
