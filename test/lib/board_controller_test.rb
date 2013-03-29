@@ -174,5 +174,39 @@ module TTT
       assert_match(end_board, @board_controller.board)
       assert_match("You lose", @board_controller.game_status)
     end
+
+    def test_changes_right_status_when_tie
+      start_board = <<-board.gsub(/^\s+/, '')
+        ┌===========┐
+        ¦ 1 | 2 | 3 ¦
+        ¦——— ——— ———¦
+        ¦ 4 | 5 | 6 ¦
+        ¦––– ––– –––¦
+        ¦ 7 | 8 | x ¦
+        ¦===========¦
+      board
+      @board_controller.next_move(9)
+      assert_match(start_board, @board_controller.board)
+      @board_controller.next_move(1)
+      @board_controller.next_move(4)
+      @board_controller.next_move(5)
+      assert_match(/Playing/, @board_controller.game_status)
+      @board_controller.next_move(8)
+      @board_controller.next_move(6)
+      @board_controller.next_move(2)
+      @board_controller.next_move(7)
+      @board_controller.next_move(3)
+      end_board = <<-board.gsub(/^\s+/, '')
+        ┌===========┐
+        ¦ o | x | x ¦
+        ¦——— ——— ———¦
+        ¦ x | o | o ¦
+        ¦––– ––– –––¦
+        ¦ o | x | x ¦
+        ¦===========¦
+      board
+      assert_match(end_board, @board_controller.board)
+      assert_match("tie", @board_controller.game_status)
+    end
   end
 end
