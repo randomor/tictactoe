@@ -62,5 +62,12 @@ module TTT
       @ai.states = [0,SIDE_X,SIDE_O,SIDE_O,0,0,0,0,SIDE_X]
       assert_equal(4, @ai.block_fork)
     end
+
+    def test_play_center
+      @ai.states = [0,0,0,SIDE_X,0,0,0,0,SIDE_O]
+      assert_equal(4, @ai.play_center)
+      @ai.states = [0,0,0,SIDE_X,SIDE_O,0,0,0,SIDE_O]
+      assert_equal(nil, @ai.play_center)
+    end
   end
 end
