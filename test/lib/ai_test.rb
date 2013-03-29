@@ -14,6 +14,11 @@ module TTT
       assert_equal(7, next_position)
     end
 
+    def test_pick_last_empty_position
+      @ai.states = [SIDE_O,SIDE_X,SIDE_O,SIDE_X,SIDE_X,SIDE_O,0,SIDE_O,SIDE_X]
+      assert_equal(6, @ai.pick_winning_index)
+    end
+
     def test_pick_horizontal_winning_position
       @ai.states = [SIDE_X,SIDE_X,0,SIDE_O,SIDE_O,0,0,0,0]
       assert_equal(2, @ai.pick_winning_index)

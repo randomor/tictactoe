@@ -9,8 +9,12 @@ module TTT
     def generate_next_move(states, side)
       @states = states
       picked = states.index(0)+1
-      index = pick_winning_position 
+      index = pick_last_position || pick_winning_position 
       picked = index+1 if index      
+    end
+
+    def pick_last_position
+      # return @states.find_index(0) if @states.count(0) == 1
     end
 
     def pick_winning_index
