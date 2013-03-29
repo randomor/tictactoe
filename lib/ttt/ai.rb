@@ -10,7 +10,7 @@ module TTT
     def generate_next_move(states, side)
       @states = states
       picked = states.index(0)+1
-      index = pick_last_position || pick_winning_position || block_opponent || create_fork || 0
+      index = pick_last_position || pick_winning_position || block_opponent || create_fork || block_fork || 0
       picked = index+1      
     end
 
@@ -28,6 +28,10 @@ module TTT
 
     def create_fork
       forking_position_for_side(@side)
+    end
+
+    def block_fork
+      forking_position_for_side(@opponent)
     end
 
     def forking_position_for_side(side)
