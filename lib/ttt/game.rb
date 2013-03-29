@@ -34,7 +34,7 @@ module TTT
         return
       end
       user_move_to_position next_position
-      if (@board_controller.game_status == :Playing)
+      if @board_controller.game_status == :Playing
         display_board
         computer_move
       else
@@ -60,7 +60,7 @@ module TTT
       puts "Computer thinking..."
       @board_controller.next_computer_move
       puts "Computer moved."
-      if (@board_controller.game_status == :Playing)
+      if @board_controller.game_status == :Playing
         display_board
         user_move
       else
