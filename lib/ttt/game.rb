@@ -110,7 +110,7 @@ module TTT
     end
 
     def get_side_from_user
-      puts 'Which side would you pick? Type in "x" or "o".'
+      puts 'Which side would you pick? Type in "x" or "o". "x" moves first.'
       input = $stdin.gets.chomp.downcase
       if input.length == 1 && BOTH_SIDES.include?(input)
         @user_side = input
@@ -125,7 +125,6 @@ module TTT
       $stdout.puts <<-PROMPT
         | Wanna play Tic-Tac-Toe?
         | Align "x" or "o" to horizontal, vertical or diagonal lines in 3 to win.
-        | "x" always go first.
       PROMPT
     end
   end
