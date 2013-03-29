@@ -39,5 +39,9 @@ module TTT
       assert_equal(6, @ai.pick_winning_index)
     end
 
+    def test_block_opponent
+      @ai.states = [SIDE_O,SIDE_X,0,SIDE_X,SIDE_O,0,0,0,0]
+      assert_equal(8, @ai.block_opponent)
+    end
   end
 end
