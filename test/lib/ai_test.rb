@@ -45,7 +45,6 @@ module TTT
     end
 
     def test_create_fork
-      skip
       @ai.states = [SIDE_X,0,0,SIDE_O,0,0,SIDE_O,SIDE_O,SIDE_X]
       assert_equal(2, @ai.create_fork)
       @ai.states = [0,SIDE_X,0,0,SIDE_X,SIDE_O,0,SIDE_O,0]
