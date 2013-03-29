@@ -44,9 +44,9 @@ module TTT
           puts "counter 1: #{counter}"
           counter+=1 if row.count(side) == 1 && row.count(0) == 2
           puts "counter 2: #{counter}"
-          counter+=1 if (row_number == 0 && column_number == 0 || row_number == 2 && column_number == 2 || [column_number, row_number] == [1, 1]) && diagonal_line.count(side) == 1 && diagonal_line.count(0) == 2
+          counter+=1 if ([[1, 1], [0, 0], [2, 2]].include? [row_number, column_number]) && diagonal_line.count(side) == 1 && diagonal_line.count(0) == 2
           puts "counter 3: #{counter}"
-          counter+=1 if (row_number == 0 && column_number == 2 || row_number == 2 && column_number == 0 || [column_number, row_number] == [1, 1]) && counter_diagonal_line.count(side) == 1 && counter_diagonal_line.count(0) == 2
+          counter+=1 if ([[0, 2], [2, 0], [2, 2]].include? [row_number, column_number]) && counter_diagonal_line.count(side) == 1 && counter_diagonal_line.count(0) == 2
           puts "counter 4: #{counter}"
           return row_number*3 + column_number if counter >= 2
         end
