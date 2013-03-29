@@ -59,8 +59,12 @@ module TTT
       puts "Computer thinking..."
       @board_controller.next_computer_move
       puts "Computer moved."
-      display_board
-      user_move
+      if (@board_controller.game_status == :Playing)
+        display_board
+        user_move
+      else
+        display_game_result
+      end
     end
 
     def ask_user_for_next_move
