@@ -84,8 +84,34 @@ module TTT
       assert_match(end_board, @board_controller.board)
     end
 
-    def test_displays_right_status_when_o_won
-      
+    def test_displays_right_status_when_x_won
+      start_board = <<-board.gsub(/^\s+/, '')
+        ┌===========┐
+        ¦ 1 | x | 3 ¦
+        ¦——— ——— ———¦
+        ¦ 4 | 5 | 6 ¦
+        ¦––– ––– –––¦
+        ¦ 7 | 8 | 9 ¦
+        ¦===========¦
+      board
+      @board_controller.next_move(2)
+      assert_match(start_board, @board_controller.board)
+      @board_controller.next_move(1)
+      @board_controller.next_move(5)
+      @board_controller.next_move(4)
+      assert_match(/Playing/, @board_controller.game_status)
+      @board_controller.next_move(8)
+      end_board = <<-board.gsub(/^\s+/, '')
+        ┌===========┐
+        ¦ o | x | 3 ¦
+        ¦——— ——— ———¦
+        ¦ o | x | 6 ¦
+        ¦––– ––– –––¦
+        ¦ 7 | x | 9 ¦
+        ¦===========¦
+      board
+      assert_match(end_board, @board_controller.board)
+      assert_match("You won", @board_controller.game_status)
     end
   end
 end

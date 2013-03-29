@@ -55,4 +55,5 @@ class TestGame < MiniTest::Unit::TestCase
       assert_match(/Computer moved/, out)
     end
   end
+
 end

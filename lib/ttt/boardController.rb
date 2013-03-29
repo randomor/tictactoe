@@ -49,6 +49,14 @@ module TTT
     def update_game_status(current_mover)
       @game_status = :Playing
       #TODO
+      states_array = @states.each_slice(3).to_a
+      states_array.each_with_index do |row, row_number|
+        if (row.count(current_mover) == 3 || states_array.transpose[row_number].count(current_mover) == 3 || [states_array[0][0], states_array[1][1], states_array[2][2]].count(current_mover) == 3|| [states_array[0][3], states_array[1][1], states_array[2][0]].count(current_mover) == 3)
+          @game_status = current_mover == @user_side ? "You won!" : "You lose!"
+        elsif @states.count(0) == 0
+          @game_status = "It's a tie"
+        end
+      end
     end
 
     def switch_current_mover
