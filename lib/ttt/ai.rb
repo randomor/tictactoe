@@ -10,7 +10,7 @@ module TTT
     def generate_next_move(states, side)
       @states = states
       picked = states.index(0)+1
-      index = pick_last_position || pick_winning_position || block_opponent || 0
+      index = pick_last_position || pick_winning_position || block_opponent || create_fork || 0
       picked = index+1      
     end
 
@@ -23,8 +23,34 @@ module TTT
     end
 
     def block_opponent
-      #Block: If the [opponent] has two in a row, the player must play the third themself to block the opponent.
       winning_position_for_side(@opponent)
+    end
+
+    def create_fork
+      forking_position_for_side(@side)
+    end
+
+    def forking_position_for_side(side)
+      states_array = @states.each_slice(3).to_a
+      diagonal_line = [states_array[0][0], states_array[1][1], states_array[2][2]]
+      counter_diagonal_line = [states_array[0][2], states_array[1][1], states_array[2][0]]
+      states_array.each_with_index do |row, row_number|
+        row.each_with_index do |state, column_number|
+          next if state != 0
+          column = states_array.transpose[column_number]
+          counter = 0
+          puts "row number::: #{row_number}, column number: #{column_number}<<<<< counter: #{counter}"
+          counter+=1 if column.count(side) == 1 && column.count(0) == 2
+          puts "counter 1: #{counter}"
+          counter+=1 if row.count(side) == 1 && row.count(0) == 2
+          puts "counter 2: #{counter}"
+          counter+=1 if (row_number == 0 && column_number == 0 || row_number == 2 && column_number == 2 || [column_number, row_number] == [1, 1]) && diagonal_line.count(side) == 1 && diagonal_line.count(0) == 2
+          puts "counter 3: #{counter}"
+          counter+=1 if (row_number == 0 && column_number == 2 || row_number == 2 && column_number == 0 || [column_number, row_number] == [1, 1]) && counter_diagonal_line.count(side) == 1 && counter_diagonal_line.count(0) == 2
+          puts "counter 4: #{counter}"
+          return row_number*3 + column_number if counter >= 2
+        end
+      end
     end
 
     def winning_position_for_side(side)
