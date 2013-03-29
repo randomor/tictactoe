@@ -54,7 +54,24 @@ module TTT
       puts "===GAME OVER!==="
       puts @board_controller.game_status
       display_board
-      start
+      replay_game
+    end
+
+    def replay_game
+      puts "========How about a reply?========="
+      puts "Type 'n' or 'no' to quit, type in `y` or 'yes' to replay"
+      input = $stdin.gets
+      if input != nil && (input.downcase.chomp[0] == 'n')
+        @exiting = true
+        return
+      end
+      if input != nil && (input.downcase.chomp[0] == 'y')
+        get_side_from_user
+        start_playing
+      else
+        puts "I could not understand that."
+        replay_game
+      end
     end
 
     def computer_move
