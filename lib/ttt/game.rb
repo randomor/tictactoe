@@ -28,18 +28,24 @@ module TTT
 
     def user_move
       next_position = ask_user_for_next_move
-      if (@board_controller.game_status == :Playing) && !@exiting
+      if @exiting
+        puts "Exiting Game..."
+        return
+      end
+      puts "current game status"
+      puts @board_controller.game_status
+      if (@board_controller.game_status == :Playing)
         user_move_to_position next_position
         display_board
+        computer_move
       else
-        display_game_result unless @exiting
+        display_game_result
       end
     end
 
     def user_move_to_position(position)
       begin
         @board_controller.next_move(position)
-        computer_move
       rescue Errors::InvalidMoveError
         show_invalid_move_prompt
       end
@@ -47,6 +53,7 @@ module TTT
 
     def display_game_result
       puts @board_controller.game_status
+      puts ">>>>>>>>>>>>>>>>>>>>>>>>>>>> reached!!!"
     end
 
     def computer_move

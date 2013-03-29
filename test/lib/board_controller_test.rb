@@ -115,7 +115,6 @@ module TTT
     end
 
     def test_changes_right_status_when_o_won
-      skip
       start_board = <<-board.gsub(/^\s+/, '')
         ┌===========┐
         ¦ 1 | x | 3 ¦
@@ -127,16 +126,16 @@ module TTT
       board
       @board_controller.next_move(2)
       assert_match(start_board, @board_controller.board)
-      @board_controller.next_move(1)
+      @board_controller.next_computer_move
       @board_controller.next_move(5)
-      @board_controller.next_move(4)
+      @board_controller.next_computer_move
       assert_match(/Playing/, @board_controller.game_status)
       @board_controller.next_move(8)
       end_board = <<-board.gsub(/^\s+/, '')
         ┌===========┐
-        ¦ o | x | 3 ¦
+        ¦ o | x | o ¦
         ¦——— ——— ———¦
-        ¦ o | x | 6 ¦
+        ¦ 4 | x | 6 ¦
         ¦––– ––– –––¦
         ¦ 7 | x | 9 ¦
         ¦===========¦
