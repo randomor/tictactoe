@@ -10,7 +10,7 @@ module TTT
     def generate_next_move(states, side)
       @states = states
       picked = states.index(0)+1
-      index = pick_last_position || pick_winning_position || block_opponent || create_fork || block_fork || play_center || play_opposite_corner || play_empty_corner
+      index = pick_last_position || pick_winning_position || block_opponent || create_fork || block_fork || play_center || play_opposite_corner || play_empty_corner || play_empty_side
       picked = index+1      
     end
 
@@ -47,6 +47,10 @@ module TTT
 
     def play_empty_corner
       [0, 2, 6, 8].find{ |i| @states[i] == 0 }
+    end
+
+    def play_empty_side
+      [1, 3, 5, 7].find{ |i| @states[i] == 0 }
     end
 
     def forking_position_for_side(side)

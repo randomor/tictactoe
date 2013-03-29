@@ -78,5 +78,10 @@ module TTT
       @ai.states = [SIDE_O,0,0,0,0,SIDE_O,0,0,SIDE_X]
       assert_equal(2, @ai.play_empty_corner)
     end
+
+    def test_play_empty_side
+      @ai.states = [SIDE_O,0,0,0,0,SIDE_O,0,0,SIDE_X]
+      assert_equal(1, @ai.play_empty_side)
+    end
   end
 end
