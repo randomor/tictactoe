@@ -85,8 +85,7 @@ module TTT
 
     def test_generate_next_move
       states = [SIDE_O,0,0,0,0,SIDE_O,0,0,SIDE_X]
-      @ai.generate_next_move(states, SIDE_X)
-      assert_equal(1, @ai.play_empty_side)
+      assert_kind_of(Integer, @ai.generate_next_move(states, SIDE_X))
     end
   end
 end
