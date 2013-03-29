@@ -126,9 +126,9 @@ module TTT
       board
       @board_controller.next_move(2)
       assert_match(start_board, @board_controller.board)
-      @board_controller.next_computer_move
+      @board_controller.next_move(1)
       @board_controller.next_move(5)
-      @board_controller.next_computer_move
+      @board_controller.next_move(3)
       assert_match(/Playing/, @board_controller.game_status)
       @board_controller.next_move(8)
       end_board = <<-board.gsub(/^\s+/, '')
@@ -156,12 +156,12 @@ module TTT
       board
       @board_controller.next_move(9)
       assert_match(start_board, @board_controller.board)
-      @board_controller.next_computer_move
+      @board_controller.next_move(1)
       @board_controller.next_move(4)
-      @board_controller.next_computer_move
+      @board_controller.next_move(2)
       assert_match(/Playing/, @board_controller.game_status)
       @board_controller.next_move(8)
-      @board_controller.next_computer_move
+      @board_controller.next_move(3)
       end_board = <<-board.gsub(/^\s+/, '')
         ┌===========┐
         ¦ o | o | o ¦
