@@ -1,5 +1,5 @@
 require 'ttt/game'
-require 'ttt/boardController'
+require 'ttt/board_controller'
 require 'ttt/errors'
 require 'ttt/constants'
 require 'ttt/ai'
