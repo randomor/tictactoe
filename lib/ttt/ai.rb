@@ -39,15 +39,10 @@ module TTT
           next if state != 0
           column = states_array.transpose[column_number]
           counter = 0
-          puts "row number::: #{row_number}, column number: #{column_number}<<<<< counter: #{counter}"
           counter+=1 if column.count(side) == 1 && column.count(0) == 2
-          puts "counter 1: #{counter}"
           counter+=1 if row.count(side) == 1 && row.count(0) == 2
-          puts "counter 2: #{counter}"
           counter+=1 if ([[1, 1], [0, 0], [2, 2]].include? [row_number, column_number]) && diagonal_line.count(side) == 1 && diagonal_line.count(0) == 2
-          puts "counter 3: #{counter}"
-          counter+=1 if ([[0, 2], [2, 0], [2, 2]].include? [row_number, column_number]) && counter_diagonal_line.count(side) == 1 && counter_diagonal_line.count(0) == 2
-          puts "counter 4: #{counter}"
+          counter+=1 if ([[1, 1], [0, 2], [2, 0]].include? [row_number, column_number]) && counter_diagonal_line.count(side) == 1 && counter_diagonal_line.count(0) == 2
           return row_number*3 + column_number if counter >= 2
         end
       end
