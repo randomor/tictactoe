@@ -32,10 +32,8 @@ module TTT
         puts "Exiting Game..."
         return
       end
-      puts "current game status"
-      puts @board_controller.game_status
+      user_move_to_position next_position
       if (@board_controller.game_status == :Playing)
-        user_move_to_position next_position
         display_board
         computer_move
       else
@@ -52,8 +50,8 @@ module TTT
     end
 
     def display_game_result
+      display_board
       puts @board_controller.game_status
-      puts ">>>>>>>>>>>>>>>>>>>>>>>>>>>> reached!!!"
     end
 
     def computer_move
