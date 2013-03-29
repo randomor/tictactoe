@@ -73,9 +73,9 @@ module TTT
       assert_match(start_board, @board_controller.board)
       end_board = <<-board.gsub(/^\s+/, '')
         ┌===========┐
-        ¦ o | x | 3 ¦
+        ¦ 1 | x | 3 ¦
         ¦——— ——— ———¦
-        ¦ 4 | 5 | 6 ¦
+        ¦ 4 | o | 6 ¦
         ¦––– ––– –––¦
         ¦ 7 | 8 | 9 ¦
         ¦===========¦
