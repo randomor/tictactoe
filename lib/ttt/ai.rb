@@ -74,27 +74,27 @@ module TTT
 
     def winning_position_for_side(side)
       states_array = @states.each_slice(3).to_a
+      diagonal_line = [states_array[0][0], states_array[1][1], states_array[2][2]]
+      counter_diagonal_line = [states_array[0][2], states_array[1][1], states_array[2][0]]
       states_array.each_with_index do |row, row_number|
-        column = states_array.transpose[row_number]
-        diagonal_line = [states_array[0][0], states_array[1][1], states_array[2][2]]
-        counter_diagonal_line = [states_array[0][2], states_array[1][1], states_array[2][0]]
-        if row.count(side) == 2
-          blank_index = row.find_index(0)
-          return row_number*3 + blank_index
-        elsif column.count(side) == 2
-          blank_index = column.find_index(0)
-          return blank_index*3 + row_number
-        elsif diagonal_line.count(side) == 2
-          blank_index = diagonal_line.find_index(0)
-          return 4 if blank_index == 1
-          return 0 if blank_index == 0
-          return 8 if blank_index == 2
-        elsif counter_diagonal_line.count(side) == 2
-          blank_index = counter_diagonal_line.find_index(0)
-          return 4 if blank_index == 1
-          return 2 if blank_index == 0
-          return 6 if blank_index == 2
+        row.each_with_index do |state, column_number|
+          next if state != 0
+          column = states_array.transpose[column_number]
+          if row.count(side) == 2 || column.count(side) == 2
+            return row_number*3 + column_number
+          end
         end
+      end
+      if diagonal_line.count(side) == 2
+        blank_index = diagonal_line.find_index(0)
+        return 4 if blank_index == 1
+        return 0 if blank_index == 0
+        return 8 if blank_index == 2
+      elsif counter_diagonal_line.count(side) == 2
+        blank_index = counter_diagonal_line.find_index(0)
+        return 4 if blank_index == 1
+        return 2 if blank_index == 0
+        return 6 if blank_index == 2
       end
       return nil
     end
