@@ -1,6 +1,6 @@
 module TTT
   class AI
-    attr_accessor :states
+    attr_accessor :states, :side
     def initialize(states=[0,0,0,0,0,0,0,0,0])
       @states = states
       @side = SIDE_X
@@ -9,6 +9,7 @@ module TTT
 
     def generate_next_move(states, side)
       @states = states
+      @side = side
       #Strategy: http://en.wikipedia.org/wiki/Tic-tac-toe
       index = pick_last_position || pick_winning_index || block_opponent || create_fork || block_fork || play_center || play_opposite_corner || play_empty_corner || play_empty_side
       picked = index+1

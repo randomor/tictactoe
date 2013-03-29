@@ -51,8 +51,10 @@ module TTT
     end
 
     def display_game_result
-      display_board
+      puts "===GAME OVER!==="
       puts @board_controller.game_status
+      display_board
+      start
     end
 
     def computer_move
