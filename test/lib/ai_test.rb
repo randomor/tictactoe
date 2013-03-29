@@ -24,8 +24,8 @@ module TTT
     end
 
     def test_pick_vertical_winning_position
-      #@ai.states = [SIDE_X,0,0,SIDE_X,SIDE_O,SIDE_O,0,0,0]
-      #assert_equal(6, @ai.pick_winning_index)
+      @ai.states = [SIDE_X,0,0,SIDE_X,SIDE_O,SIDE_O,0,0,0]
+      assert_equal(6, @ai.pick_winning_index)
       @ai.states = [SIDE_X, SIDE_O, SIDE_X, 0, SIDE_O, SIDE_X, 0, 0, 0]
       @ai.side = SIDE_O
       assert_equal(7, @ai.pick_winning_index)
