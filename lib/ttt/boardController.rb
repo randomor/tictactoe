@@ -43,7 +43,8 @@ module TTT
     end
 
     def calculate_computer_move
-      AI.new.generate_next_move(@states)
+      @ai ||= AI.new
+      @ai.generate_next_move(@states, @current_mover)
     end
 
     def update_game_status(current_mover)
