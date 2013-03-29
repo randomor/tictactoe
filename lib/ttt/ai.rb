@@ -9,8 +9,8 @@ module TTT
 
     def generate_next_move(states, side)
       @states = states
+      #Strategy: http://en.wikipedia.org/wiki/Tic-tac-toe
       index = pick_last_position || pick_winning_index || block_opponent || create_fork || block_fork || play_center || play_opposite_corner || play_empty_corner || play_empty_side
-      puts ">>>> index is #{index}"
       picked = index+1
     end
 
