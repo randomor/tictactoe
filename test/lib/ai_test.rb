@@ -7,7 +7,6 @@ module TTT
     end
 
     def test_always_pick_winning_position_first
-      skip
       position = @ai.generate_next_move([SIDE_X,SIDE_X,0,SIDE_O,SIDE_O,0,0,0,0], SIDE_X)
       assert_equal(3, position)
       next_position = @ai.generate_next_move([SIDE_X,0,0,SIDE_X,SIDE_O,SIDE_O,0,0,0], SIDE_X)
