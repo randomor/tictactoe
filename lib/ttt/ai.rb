@@ -9,9 +9,9 @@ module TTT
 
     def generate_next_move(states, side)
       @states = states
-      picked = states.index(0)+1
-      index = pick_last_position || pick_winning_position || block_opponent || create_fork || block_fork || play_center || play_opposite_corner || play_empty_corner || play_empty_side
-      picked = index+1      
+      index = pick_last_position || pick_winning_index || block_opponent || create_fork || block_fork || play_center || play_opposite_corner || play_empty_corner || play_empty_side
+      puts ">>>> index is #{index}"
+      picked = index+1
     end
 
     def pick_last_position
@@ -69,6 +69,7 @@ module TTT
           return row_number*3 + column_number if counter >= 2
         end
       end
+      return nil
     end
 
     def winning_position_for_side(side)
@@ -95,6 +96,7 @@ module TTT
           return 6 if blank_index == 2
         end
       end
+      return nil
     end
   end
 end
