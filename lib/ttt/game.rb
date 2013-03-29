@@ -15,6 +15,7 @@ module TTT
 
     def start_playing
       @board_controller = BoardController.new(@user_side)
+      display_board
       if @user_side == SIDE_O
         computer_move
       else
