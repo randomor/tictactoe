@@ -3,7 +3,7 @@ module TTT
     attr_reader :boardController, :side
 
     def initialize
-      @side = SIDE_X
+      @user_side = SIDE_X
       @exiting = false
     end
 
@@ -14,8 +14,8 @@ module TTT
     end
 
     def start_playing
-      @board_controller = BoardController.new(@side)
-      if @side == SIDE_O
+      @board_controller = BoardController.new(@user_side)
+      if @user_side == SIDE_O
         computer_move
       else
         user_move
@@ -27,11 +27,22 @@ module TTT
     end
 
     def user_move
+      next_position = ask_user_for_next_move
       unless (@board_controller.game_status != :Playing) || @exiting
+        user_move_to_position next_position
         display_board
-        ask_user_for_next_move
       else
         display_game_result unless @exiting
+      end
+    end
+
+    def user_move_to_position(position)
+      #Refactor: move this to a method...
+      begin
+        @board_controller.next_move(position)
+        computer_move
+      rescue Errors::InvalidMoveError
+        show_invalid_move_prompt
       end
     end
 
@@ -44,6 +55,7 @@ module TTT
       puts "Computer thinking..."
       @board_controller.next_computer_move
       puts "Computer moved."
+      display_board
       user_move
     end
 
@@ -61,13 +73,7 @@ module TTT
         show_invalid_move_prompt
         return
       end
-      #Refactor: move this to a method...
-      begin
-        @board_controller.next_move(input.to_i)
-        computer_move
-      rescue Errors::InvalidMoveError
-        show_invalid_move_prompt
-      end
+      input.to_i
     end
 
     def show_invalid_move_prompt
@@ -79,8 +85,8 @@ module TTT
       puts 'Which side would you pick? Type in "x" or "o".'
       input = $stdin.gets.chomp.downcase
       if input.length == 1 && BOTH_SIDES.include?(input)
-        @side = input
-        puts "You picked '#{@side}'"
+        @user_side = input
+        puts "You picked '#{@user_side}'"
       else
         puts 'Invalid pick, pick again please.'
         get_side_from_user
