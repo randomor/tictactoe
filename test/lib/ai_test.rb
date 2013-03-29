@@ -11,6 +11,8 @@ module TTT
       assert_equal(3, position)
       next_position = @ai.generate_next_move([SIDE_X,0,0,SIDE_X,SIDE_O,SIDE_O,0,0,0], SIDE_X)
       assert_equal(7, next_position)
+      next_position = @ai.generate_next_move([SIDE_X,0,0,SIDE_X,SIDE_O,0,0,0,0], SIDE_O)
+      assert_equal(7, next_position)
     end
 
     def test_pick_last_empty_position
@@ -44,6 +46,9 @@ module TTT
     def test_block_opponent
       @ai.states = [SIDE_O,SIDE_X,0,SIDE_X,SIDE_O,0,0,0,0]
       assert_equal(8, @ai.block_opponent)
+      @ai.states = [SIDE_X,0,0,SIDE_X,SIDE_O,0,0,0,0]
+      @ai.side = SIDE_O
+      assert_equal(6, @ai.block_opponent)
     end
 
     def test_create_fork

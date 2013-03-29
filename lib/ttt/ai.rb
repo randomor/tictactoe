@@ -4,7 +4,10 @@ module TTT
     def initialize(states=[0,0,0,0,0,0,0,0,0])
       @states = states
       @side = SIDE_X
-      @opponent = @side == SIDE_X ? SIDE_O : SIDE_X
+    end
+
+    def opponent
+      @side == SIDE_X ? SIDE_O : SIDE_X
     end
 
     def generate_next_move(states, side)
@@ -24,7 +27,7 @@ module TTT
     end
 
     def block_opponent
-      winning_position_for_side(@opponent)
+      winning_position_for_side(opponent)
     end
 
     def create_fork
@@ -32,7 +35,7 @@ module TTT
     end
 
     def block_fork
-      forking_position_for_side(@opponent)
+      forking_position_for_side(opponent)
     end
 
     def play_center
@@ -40,10 +43,10 @@ module TTT
     end
 
     def play_opposite_corner
-      return 8 if @states[0] == @opponent && @states[8] == 0
-      return 6 if @states[2] == @opponent && @states[6] == 0
-      return 2 if @states[6] == @opponent && @states[2] == 0
-      return 0 if @states[8] == @opponent && @states[0] == 0
+      return 8 if @states[0] == opponent && @states[8] == 0
+      return 6 if @states[2] == opponent && @states[6] == 0
+      return 2 if @states[6] == opponent && @states[2] == 0
+      return 0 if @states[8] == opponent && @states[0] == 0
     end
 
     def play_empty_corner
