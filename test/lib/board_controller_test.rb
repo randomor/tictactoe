@@ -84,7 +84,7 @@ module TTT
       assert_match(end_board, @board_controller.board)
     end
 
-    def test_displays_right_status_when_x_won
+    def test_changes_right_status_when_x_won
       start_board = <<-board.gsub(/^\s+/, '')
         ┌===========┐
         ¦ 1 | x | 3 ¦
@@ -114,7 +114,7 @@ module TTT
       assert_match("You won", @board_controller.game_status)
     end
 
-    def test_displays_right_status_when_o_won
+    def test_changes_right_status_when_o_won
       skip
       start_board = <<-board.gsub(/^\s+/, '')
         ┌===========┐

@@ -1,6 +1,6 @@
 module TTT
   class Game
-    attr_reader :boardController, :side
+    attr_reader :board_controller, :user_side
 
     def initialize
       @user_side = SIDE_X
@@ -28,7 +28,7 @@ module TTT
 
     def user_move
       next_position = ask_user_for_next_move
-      unless (@board_controller.game_status != :Playing) || @exiting
+      if (@board_controller.game_status == :Playing) && !@exiting
         user_move_to_position next_position
         display_board
       else
@@ -37,7 +37,6 @@ module TTT
     end
 
     def user_move_to_position(position)
-      #Refactor: move this to a method...
       begin
         @board_controller.next_move(position)
         computer_move

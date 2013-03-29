@@ -19,7 +19,7 @@ module TTT
     end
 
     def next_move(position)
-      if position.between?(1, 9)
+      if position.between?(1, 9) && !position.nil?
         index = position-1 
       else
         raise Errors::InvalidMoveError
