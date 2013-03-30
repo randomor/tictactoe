@@ -77,6 +77,7 @@ module TTT
     def computer_move
       puts ">Computer's turn:"
       puts "Computer thinking..."
+      sleep(1) unless ENV['TTT_ENV']
       @board_controller.next_computer_move
       puts "Computer moved."
       if @board_controller.game_status == :Playing
