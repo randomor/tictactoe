@@ -209,5 +209,67 @@ module TTT
       assert_match(end_board, @board_controller.board)
       assert_match("tie", @board_controller.game_status)
     end
+
+    def test_detects_diagonal_winning_status
+      start_board = <<-board.gsub(/^\s+/, '')
+        ┌===========┐
+        ¦ 1 | 2 | 3 ¦
+        ¦——— ——— ———¦
+        ¦ 4 | 5 | 6 ¦
+        ¦––– ––– –––¦
+        ¦ 7 | 8 | 9 ¦
+        ¦===========¦
+      board
+      @board_controller.next_move(1)
+      assert_match(start_board, @board_controller.board)
+      @board_controller.next_move(5)
+      @board_controller.next_move(2)
+      @board_controller.next_move(3)
+      assert_match(/Playing/, @board_controller.game_status)
+      @board_controller.next_move(6)
+      @board_controller.next_move(7)
+      end_board = <<-board.gsub(/^\s+/, '')
+        ┌===========┐
+        ¦ x | x | o ¦
+        ¦——— ——— ———¦
+        ¦ 4 | o | x ¦
+        ¦––– ––– –––¦
+        ¦ o | 8 | 9 ¦
+        ¦===========¦
+      board
+      assert_match(end_board, @board_controller.board)
+      assert_match("lose", @board_controller.game_status)
+    end
+
+    def test_detects_counter_diagonal_winning_status
+      skip
+      start_board = <<-board.gsub(/^\s+/, '')
+        ┌===========┐
+        ¦ 1 | 2 | 3 ¦
+        ¦——— ——— ———¦
+        ¦ 4 | 5 | 6 ¦
+        ¦––– ––– –––¦
+        ¦ 7 | 8 | 9 ¦
+        ¦===========¦
+      board
+      @board_controller.next_move(1)
+      assert_match(start_board, @board_controller.board)
+      @board_controller.next_move(2)
+      @board_controller.next_move(5)
+      @board_controller.next_move(6)
+      assert_match(/Playing/, @board_controller.game_status)
+      @board_controller.next_move(9)
+      end_board = <<-board.gsub(/^\s+/, '')
+        ┌===========┐
+        ¦ x | o | 3 ¦
+        ¦——— ——— ———¦
+        ¦ 4 | x | o ¦
+        ¦––– ––– –––¦
+        ¦ 7 | 8 | x ¦
+        ¦===========¦
+      board
+      assert_match(end_board, @board_controller.board)
+      assert_match("win", @board_controller.game_status)
+    end
   end
 end
