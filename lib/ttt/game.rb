@@ -90,9 +90,9 @@ module TTT
 
     def ask_user_for_next_move
       puts ">Your turn:"
-      puts "What's your next move? Type in the position.(Type 'exit' to quit)"
+      puts "What's your next move? Type in the position(Type 'exit' or 'e' to exit)."
       input = $stdin.gets
-      if input != nil && (input.chomp == 'exit')
+      if input != nil && (input.downcase.chomp[0] == 'e')
         @exiting = true
         return
       end
@@ -106,7 +106,7 @@ module TTT
     end
 
     def show_invalid_move_prompt
-      puts "That was not a valid move! Please try again"
+      puts "That was not a valid move! Please try again."
       ask_user_for_next_move
     end
 
