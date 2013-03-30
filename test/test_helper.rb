@@ -1,12 +1,10 @@
 ENV['TTT_ENV'] = 'test'
-$LOAD_PATH.unshift(File.dirname(__FILE__))
-$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), "..", "lib"))
 
 require "rubygems"
 # require 'minitest/spec'
 require "minitest/autorun"
 require "stringio"
-require "ttt"
+require_relative "../lib/ttt"
 
 
 # To test IO

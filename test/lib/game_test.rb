@@ -1,6 +1,6 @@
-require 'test_helper'
+require_relative '../test_helper'
 
-class TestGame < MiniTest::Unit::TestCase
+class TTT::TestGame < MiniTest::Unit::TestCase
   def setup
     @game = TTT::Game.new
   end
