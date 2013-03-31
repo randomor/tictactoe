@@ -51,14 +51,20 @@ module TTT
     end
 
     def display_game_result
-      puts "===GAME OVER!==="
-      puts @board_controller.game_status
-      display_board
+      status = @board_controller.game_status
+      padding = "+"*((52-status.length)/2)
+      result_string = padding+status+padding
+      puts <<-PROMPT.gsub(/^\s+/, '')
+      =====================GAME OVER!=====================
+      #{result_string}
+      =====================GAME OVER!=====================
+      PROMPT
       replay_game
     end
 
     def replay_game
-      puts "========How about a reply?========="
+      puts " "
+      puts "        ========How about a reply?=========        "
       puts "Type 'n' or 'no' to quit, type in `y` or 'yes' to replay"
       input = $stdin.gets
       if input != nil && (input.downcase.chomp[0] == 'n')
@@ -123,7 +129,7 @@ module TTT
     end
 
     def start_prompt
-      $stdout.puts <<-PROMPT
+      $stdout.puts <<-PROMPT.gsub(/^\s+/, '')
         | Wanna play Tic-Tac-Toe?
         | Align "x" or "o" to horizontal, vertical or diagonal lines in 3 to win.
       PROMPT

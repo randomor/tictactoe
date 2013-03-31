@@ -242,10 +242,9 @@ module TTT
     end
 
     def test_detects_counter_diagonal_winning_status
-      skip
       start_board = <<-board.gsub(/^\s+/, '')
         ┌===========┐
-        ¦ 1 | 2 | 3 ¦
+        ¦ x | 2 | 3 ¦
         ¦——— ——— ———¦
         ¦ 4 | 5 | 6 ¦
         ¦––– ––– –––¦
@@ -269,7 +268,7 @@ module TTT
         ¦===========¦
       board
       assert_match(end_board, @board_controller.board)
-      assert_match("win", @board_controller.game_status)
+      assert_match("won", @board_controller.game_status)
     end
   end
 end
