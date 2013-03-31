@@ -8,13 +8,13 @@ module TTT
       @board_controller = BoardController.new()
     end
 
-    def test_board_draws
+    def test_controller_properties
       assert_respond_to(@board_controller, :board)
       assert_equal(@board_controller.current_mover, SIDE_X)
       assert_equal(@board_controller.game_status, :Playing)
     end
 
-    def test_draws_well
+    def test_board_render
       #heredoc indent
       #http://rubyquicktips.com/post/4438542511/heredoc-and-indent
       board = <<-board.gsub(/^\s+/, '')
@@ -30,6 +30,7 @@ module TTT
     end
 
     def test_next_move
+      assert_match(SIDE_X, @board_controller.current_mover)
       @board_controller.next_move(3)
       board = <<-board.gsub(/^\s+/, '')
         ┌===========┐
@@ -40,6 +41,7 @@ module TTT
         ¦ 7 | 8 | 9 ¦
         ¦===========¦
       board
+      assert_match(SIDE_O, @board_controller.current_mover)
       assert_match(board, @board_controller.board)
     end
 

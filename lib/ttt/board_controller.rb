@@ -25,7 +25,6 @@ module TTT
       else
         raise Errors::InvalidMoveError
       end
-
       if @states[index] != 0
         raise Errors::InvalidMoveError
       else
@@ -43,27 +42,6 @@ module TTT
       end
     end
 
-    def calculate_computer_move
-      @ai ||= AI.new
-      @ai.generate_next_move(@states, @current_mover)
-    end
-
-    def update_game_status(current_mover)
-      @game_status = :Playing
-      states_array = @states.each_slice(3).to_a
-      states_array.each_with_index do |row, row_number|
-        if row.count(current_mover) == 3 || states_array.transpose[row_number].count(current_mover) == 3 || [states_array[0][0], states_array[1][1], states_array[2][2]].count(current_mover) == 3|| [states_array[0][2], states_array[1][1], states_array[2][0]].count(current_mover) == 3
-          @game_status = current_mover == @user_side ? "You won!" : "You lose!"
-        elsif @states.count(0) == 0
-          @game_status = "It's a tie"
-        end
-      end
-    end
-
-    def switch_current_mover
-      @current_mover = @current_mover == SIDE_X ? SIDE_O : SIDE_X
-    end
-
     def board
       @states.each_with_index do |s, i|
         index_string = (i+1).to_s
@@ -71,5 +49,27 @@ module TTT
       end
       @board
     end
+
+    private
+
+      def calculate_computer_move
+        @ai ||= AI.new
+        @ai.generate_next_move(@states, @current_mover)
+      end
+
+      def update_game_status(current_mover)
+        states_array = @states.each_slice(3).to_a
+        states_array.each_with_index do |row, row_number|
+          if row.count(current_mover) == 3 || states_array.transpose[row_number].count(current_mover) == 3 || [states_array[0][0], states_array[1][1], states_array[2][2]].count(current_mover) == 3|| [states_array[0][2], states_array[1][1], states_array[2][0]].count(current_mover) == 3
+            @game_status = current_mover == @user_side ? "You won!" : "You lose!"
+          elsif @states.count(0) == 0
+            @game_status = "It's a tie"
+          end
+        end
+      end
+
+      def switch_current_mover
+        @current_mover = @current_mover == SIDE_X ? SIDE_O : SIDE_X
+      end
   end
 end
