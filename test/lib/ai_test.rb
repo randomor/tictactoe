@@ -61,6 +61,11 @@ module TTT
       assert_equal(4, @ai.create_fork)
     end
 
+    def test_do_not_play_in_corner_fork
+      @ai.states = [SIDE_X,0,0,0,SIDE_O,0,0,0,SIDE_X]
+      assert_includes([1, 3, 5, 7], @ai.create_fork)
+    end
+
     def test_block_fork
       @ai.states = [SIDE_O,0,0,SIDE_X,0,0,SIDE_X,SIDE_X,SIDE_O]
       assert_equal(2, @ai.block_fork)

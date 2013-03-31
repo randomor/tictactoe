@@ -32,6 +32,10 @@ module TTT
     end
 
     def create_fork
+      #don't play corner for these moves.
+      if @states == [SIDE_X,0,0,0,SIDE_O,0,0,0,SIDE_X] || @states == [SIDE_O,0,0,0,SIDE_O,0,0,0,SIDE_O] ||@states ==  [0,0,SIDE_X,0,SIDE_O,0,SIDE_X,0,0] || @states == [0,0,SIDE_O,0,SIDE_X,0,SIDE_O,0,0]
+        return [1, 3, 5, 7].sample 
+      end
       forking_position_for_side(@side)
     end
 
