@@ -120,31 +120,33 @@ module TTT
     def test_changes_right_status_when_o_won
       start_board = <<-board.gsub(/^\s+/, '')
         ┌===========┐
-        ¦ 1 | x | 3 ¦
+        ¦ 1 | 2 | 3 ¦
         ¦——— ——— ———¦
         ¦ 4 | 5 | 6 ¦
         ¦––– ––– –––¦
-        ¦ 7 | 8 | 9 ¦
+        ¦ 7 | 8 | x ¦
         ¦===========¦
       board
-      @board_controller.next_move(2)
-      assert_match(start_board, @board_controller.board)
-      @board_controller.next_move(1)
-      @board_controller.next_move(5)
-      @board_controller.next_move(3)
-      assert_match(/Playing/, @board_controller.game_status)
-      @board_controller.next_move(8)
+      @o_board_controller = BoardController.new(SIDE_O)
+      @o_board_controller.next_move(9)
+      assert_match(start_board, @o_board_controller.board)
+      @o_board_controller.next_move(1)
+      @o_board_controller.next_move(5)
+      @o_board_controller.next_move(3)
+      assert_match(/Playing/, @o_board_controller.game_status)
+      @o_board_controller.next_move(8)
+      @o_board_controller.next_move(2)
       end_board = <<-board.gsub(/^\s+/, '')
         ┌===========┐
-        ¦ o | x | o ¦
+        ¦ o | o | o ¦
         ¦——— ——— ———¦
         ¦ 4 | x | 6 ¦
         ¦––– ––– –––¦
-        ¦ 7 | x | 9 ¦
+        ¦ 7 | x | x ¦
         ¦===========¦
       board
-      assert_match(end_board, @board_controller.board)
-      assert_match("You won", @board_controller.game_status)
+      assert_match(end_board, @o_board_controller.board)
+      assert_match("You won", @o_board_controller.game_status)
     end
 
     def test_changes_right_status_when_x_lose
