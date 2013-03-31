@@ -213,7 +213,7 @@ module TTT
     def test_detects_diagonal_winning_status
       start_board = <<-board.gsub(/^\s+/, '')
         ┌===========┐
-        ¦ 1 | 2 | 3 ¦
+        ¦ x | 2 | 3 ¦
         ¦——— ——— ———¦
         ¦ 4 | 5 | 6 ¦
         ¦––– ––– –––¦
