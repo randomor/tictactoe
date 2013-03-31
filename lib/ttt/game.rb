@@ -51,6 +51,7 @@ module TTT
     end
 
     def display_game_result
+      display_board
       status = @board_controller.game_status
       padding = "+"*((52-status.length)/2)
       result_string = padding+status+padding
