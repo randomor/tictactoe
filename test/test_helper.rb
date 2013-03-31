@@ -1,3 +1,4 @@
+# encoding: utf-8
 ENV['TTT_ENV'] = 'test'
 
 require "rubygems"

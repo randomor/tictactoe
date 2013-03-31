@@ -1,3 +1,4 @@
+# encoding: utf-8
 module TTT
   class Game
     attr_reader :board_controller, :user_side

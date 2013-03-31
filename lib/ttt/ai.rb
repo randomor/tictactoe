@@ -1,3 +1,4 @@
+# encoding: utf-8
 module TTT
   class AI
     attr_accessor :states, :side

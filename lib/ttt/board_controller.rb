@@ -1,3 +1,4 @@
+# encoding: utf-8
 module TTT
   class BoardController
     attr_reader :current_mover, :game_status
