@@ -54,13 +54,9 @@ module TTT
     def display_game_result
       display_board
       status = @board_controller.game_status
-      padding = "+"*((52-status.length)/2)
-      result_string = padding+status+padding
-      puts <<-PROMPT.gsub(/^\s+/, '')
-      =====================GAME OVER!=====================
-      #{result_string}
-      =====================GAME OVER!=====================
-      PROMPT
+      puts "GAME OVER!".center(52, "=")
+      puts status.center(52, "+")
+      puts "GAME OVER!".center(52, "=")
       replay_game
     end
 
