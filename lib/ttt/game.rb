@@ -1,6 +1,7 @@
 # encoding: utf-8
 module TTT
   class Game
+    PROMPT_WIDTH = 60
     attr_reader :board_controller, :user_side
 
     def initialize
@@ -54,15 +55,15 @@ module TTT
     def display_game_result
       display_board
       status = @board_controller.game_status
-      puts "GAME OVER!".center(52, "=")
-      puts status.center(52, "+")
-      puts "GAME OVER!".center(52, "=")
+      puts "GAME OVER!".center(PROMPT_WIDTH, "=")
+      puts status.center(PROMPT_WIDTH, "+")
+      puts "GAME OVER!".center(PROMPT_WIDTH, "=")
       replay_game
     end
 
     def replay_game
       puts " "
-      puts "        ========How about a reply?=========        "
+      puts "How about a reply?".center(PROMPT_WIDTH, "=")
       puts "Type 'n' or 'no' to quit, type in `y` or 'yes' to replay"
       input = $stdin.gets
       if input != nil && (input.downcase.chomp[0] == 'n')
@@ -79,7 +80,7 @@ module TTT
     end
 
     def computer_move
-      puts ">Computer's turn:"
+      puts ">Computer's turn"
       puts "Computer thinking..."
       sleep(1) unless ENV['TTT_ENV']
       @board_controller.next_computer_move
