@@ -19,6 +19,10 @@ module TTT
       board
     end
 
+    def valid_move?(position)
+      @states[position-1] == 0
+    end
+
     def available_positions
       #states_array.
       @states.collect.with_index do |s, i|

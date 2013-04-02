@@ -20,6 +20,12 @@ module TTT
       assert_equal([1, 2, 4, 5, 6, 7, 8, 9], @board_controller.available_positions)
     end
 
+    def test_valid_move
+      assert_equal(true, @board_controller.valid_move?(3))
+      @board_controller.next_move(3)
+      assert_equal(false, @board_controller.valid_move?(3))
+    end
+
     def test_board_render
       #heredoc indent
       #http://rubyquicktips.com/post/4438542511/heredoc-and-indent
