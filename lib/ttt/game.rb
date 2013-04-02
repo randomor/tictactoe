@@ -5,24 +5,36 @@ module TTT
     attr_reader :board_controller, :user_side
 
     def initialize
-      @user_side = SIDE_X
+      @user_side = @current_player = SIDE_X
       @exiting = false
     end
 
     def start
       start_prompt
-      get_side_from_user
       start_playing
     end
 
     def start_playing
+      get_side_from_user
       @board_controller = BoardController.new(@user_side)
       display_board
-      if @user_side == SIDE_O
-        computer_move
-      else
-        user_move
+      until @board_controller.game_status != :Playing || @exiting
+        play_next
       end
+      display_game_result unless @exiting
+    end
+
+    def play_next
+      if @current_player == @user_side
+        user_move
+      else
+        computer_move
+      end
+      switch_current_player
+    end
+
+    def switch_current_player
+      @current_player = @current_player == SIDE_X ? SIDE_O : SIDE_X
     end
 
     def display_board
@@ -31,16 +43,9 @@ module TTT
 
     def user_move
       next_position = ask_user_for_next_move
-      if @exiting
-        puts "Exiting Game..."
-        return
-      end
-      user_move_to_position next_position
-      if @board_controller.game_status == :Playing
+      if next_position
+        user_move_to_position next_position
         display_board
-        computer_move
-      else
-        display_game_result
       end
     end
 
@@ -49,11 +54,12 @@ module TTT
         @board_controller.next_move(position)
       rescue Errors::InvalidMoveError
         show_invalid_move_prompt
+        user_move
       end
     end
 
     def display_game_result
-      display_board
+      display_board   #TODO move it to the bottom of the method
       status = @board_controller.game_status
       puts "GAME OVER!".center(PROMPT_WIDTH, "=")
       puts status.center(PROMPT_WIDTH, "+")
@@ -71,7 +77,6 @@ module TTT
         return
       end
       if input != nil && (input.downcase.chomp[0] == 'y')
-        get_side_from_user
         start_playing
       else
         puts "I could not understand that."
@@ -85,12 +90,7 @@ module TTT
       sleep(1) unless ENV['TTT_ENV']
       @board_controller.next_computer_move
       puts "Computer moved."
-      if @board_controller.game_status == :Playing
-        display_board
-        user_move
-      else
-        display_game_result
-      end
+      display_board
     end
 
     def ask_user_for_next_move
@@ -101,18 +101,16 @@ module TTT
         @exiting = true
         return
       end
-      if input != nil && input.length != 1
+      if input != nil && input.length == 1 && input.to_i.between?(1, 9)
         input = input.chomp.downcase 
       else
         show_invalid_move_prompt
-        return
       end
       input.to_i
     end
 
     def show_invalid_move_prompt
       puts "That was not a valid move! Please try again."
-      ask_user_for_next_move
     end
 
     def get_side_from_user
