@@ -70,13 +70,12 @@ module TTT
     def replay_game
       puts " "
       puts "How about a reply?".center(PROMPT_WIDTH, "=")
-      puts "Type 'n' or 'no' to quit, type in `y` or 'yes' to replay"
-      input = $stdin.gets
-      if input != nil && (input.downcase.chomp[0] == 'n')
+      puts "Type 'n' or 'no' to quit, `y` or 'yes' to replay"
+      input = $stdin.gets.downcase.chomp[0]
+      if input == 'n'
         @exiting = true
         return
-      end
-      if input != nil && (input.downcase.chomp[0] == 'y')
+      elsif input == 'y'
         start_playing
       else
         puts "I could not understand that."
@@ -94,7 +93,7 @@ module TTT
 
     def ask_user_for_next_move
       puts ">Your turn:"
-      puts "What's your next move? Type in the position(Type 'exit' or 'e' to exit)."
+      puts "What's your next move? Type in the position(Type 'e' or 'exit' to exit)."
       input = $stdin.gets.chomp.downcase
       if input.chomp[0] == 'e'
         @exiting = true
