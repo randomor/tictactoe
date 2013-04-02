@@ -7,7 +7,7 @@ module TTT
     def initialize
       @user_side = @current_player = SIDE_X
       @exiting = false
-      @board_controller = BoardController.new(@user_side)
+      @board_controller = BoardController.new
     end
 
     def start
@@ -17,7 +17,7 @@ module TTT
 
     def start_playing
       get_side_from_user
-      @board_controller = BoardController.new(@user_side)
+      @board_controller = BoardController.new
       display_board
       until @board_controller.game_status != :Playing || @exiting
         play_next

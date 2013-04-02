@@ -3,9 +3,8 @@ module TTT
   class BoardController
     attr_reader :current_mover, :game_status, :states
 
-    def initialize(user_side=SIDE_X, states_array=[0,0,0,0,0,0,0,0,0])
+    def initialize(states_array=[0,0,0,0,0,0,0,0,0])
       @states = states_array
-      @user_side = user_side
       @current_mover = SIDE_X
       @game_status = :Playing
       @board = <<-board.gsub(/^\s+/, '')
@@ -53,9 +52,9 @@ module TTT
         states_array = @states.each_slice(3).to_a
         states_array.each_with_index do |row, row_number|
           if row.count(current_mover) == 3 || states_array.transpose[row_number].count(current_mover) == 3 || [states_array[0][0], states_array[1][1], states_array[2][2]].count(current_mover) == 3|| [states_array[0][2], states_array[1][1], states_array[2][0]].count(current_mover) == 3
-            @game_status = current_mover == @user_side ? "You won!" : "You lose!"
+            @game_status = current_mover == SIDE_X ? :X_won : :O_won
           elsif @states.count(0) == 0
-            @game_status = "It's a tie"
+            @game_status = :Tie
           end
         end
       end
