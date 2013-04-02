@@ -44,18 +44,11 @@ module TTT
     end
 
     def user_move
+      puts ">Your turn:"
       next_position = ask_user_for_next_move
       if next_position
-        user_move_to_position next_position
-      end
-    end
-
-    def user_move_to_position(position)
-      begin
-        @board_controller.next_move(position)
-      rescue Errors::InvalidMoveError
-        show_invalid_move_prompt
-        user_move
+        @board_controller.next_move next_position
+        puts "You moved."
       end
     end
 
@@ -87,12 +80,16 @@ module TTT
       puts ">Computer's turn"
       puts "Computer thinking..."
       sleep(1) unless ENV['TTT_ENV']
-      @board_controller.next_computer_move
+      @board_controller.next_move calculate_computer_move
       puts "Computer moved."
     end
 
+    def calculate_computer_move
+      @ai ||= AI.new
+      @ai.generate_next_move(@board_controller.states, @current_player)
+    end
+
     def ask_user_for_next_move
-      puts ">Your turn:"
       puts "What's your next move? Type in the position(Type 'e' or 'exit' to exit)."
       input = $stdin.gets.chomp.downcase
       if input.chomp[0] == 'e'

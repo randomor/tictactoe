@@ -1,7 +1,7 @@
 # encoding: utf-8
 module TTT
   class BoardController
-    attr_reader :current_mover, :game_status
+    attr_reader :current_mover, :game_status, :states
 
     def initialize(user_side=SIDE_X, states_array=[0,0,0,0,0,0,0,0,0])
       @states = states_array
@@ -48,14 +48,6 @@ module TTT
       end
     end
 
-    def next_computer_move
-      if @gamer_side == @current_mover
-        raise Errors::InvalidMoveError
-      else
-        next_move(calculate_computer_move)
-      end
-    end
-
     def board
       @states.each_with_index do |s, i|
         index_string = (i+1).to_s
@@ -65,11 +57,6 @@ module TTT
     end
 
     private
-
-      def calculate_computer_move
-        @ai ||= AI.new
-        @ai.generate_next_move(@states, @current_mover)
-      end
 
       def update_game_status(current_mover)
         states_array = @states.each_slice(3).to_a

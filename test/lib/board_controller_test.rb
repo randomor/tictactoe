@@ -76,30 +76,6 @@ module TTT
       assert_equal(@board_controller.game_status, :Playing)
     end
 
-    def test_next_computer_move
-      start_board = <<-board.gsub(/^\s+/, '')
-        ┌===========┐
-        ¦ 1 | x | 3 ¦
-        ¦——— ——— ———¦
-        ¦ 4 | 5 | 6 ¦
-        ¦––– ––– –––¦
-        ¦ 7 | 8 | 9 ¦
-        ¦===========¦
-      board
-      @board_controller.next_move(2)
-      assert_match(start_board, @board_controller.board)
-      end_board = <<-board.gsub(/^\s+/, '')
-        ┌===========┐
-        ¦ 1 | x | 3 ¦
-        ¦——— ——— ———¦
-        ¦ 4 | o | 6 ¦
-        ¦––– ––– –––¦
-        ¦ 7 | 8 | 9 ¦
-        ¦===========¦
-      board
-      @board_controller.next_computer_move
-      assert_match(end_board, @board_controller.board)
-    end
 
     def test_changes_right_status_when_x_won
       start_board = <<-board.gsub(/^\s+/, '')
