@@ -14,12 +14,6 @@ module TTT
       assert_equal(@board_controller.game_status, :Playing)
     end
 
-    def test_available_positions
-      assert_equal([1, 2, 3, 4, 5, 6, 7, 8, 9], @board_controller.available_positions)
-      @board_controller.next_move(3)
-      assert_equal([1, 2, 4, 5, 6, 7, 8, 9], @board_controller.available_positions)
-    end
-
     def test_valid_move
       assert_equal(true, @board_controller.valid_move?(3))
       @board_controller.next_move(3)

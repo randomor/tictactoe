@@ -24,15 +24,6 @@ module TTT
       @states[position-1] == 0
     end
 
-    def available_positions
-      #states_array.
-      @states.collect.with_index do |s, i|
-        if s == 0
-          i+1
-        end
-      end.compact
-    end
-
     def next_move(position)
       if !position.nil? && position.between?(1, 9) && !position.nil?
         index = position-1 
