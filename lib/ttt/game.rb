@@ -21,6 +21,7 @@ module TTT
       display_board
       until @board_controller.game_status != :Playing || @exiting
         play_next
+        display_board
       end
       display_game_result unless @exiting
     end
@@ -46,7 +47,6 @@ module TTT
       next_position = ask_user_for_next_move
       if next_position
         user_move_to_position next_position
-        display_board
       end
     end
 
@@ -90,7 +90,6 @@ module TTT
       sleep(1) unless ENV['TTT_ENV']
       @board_controller.next_computer_move
       puts "Computer moved."
-      display_board
     end
 
     def ask_user_for_next_move
