@@ -7,6 +7,7 @@ module TTT
     def initialize
       @user_side = @current_player = SIDE_X
       @exiting = false
+      @board_controller = BoardController.new(@user_side)
     end
 
     def start
@@ -101,10 +102,11 @@ module TTT
         @exiting = true
         return
       end
-      if input != nil && input.length == 1 && input.to_i.between?(1, 9)
-        input = input.chomp.downcase 
+      if input != nil && input.chomp!.length == 1 && @board_controller.valid_move?(input.to_i)
+        input
       else
         show_invalid_move_prompt
+        input = ask_user_for_next_move
       end
       input.to_i
     end

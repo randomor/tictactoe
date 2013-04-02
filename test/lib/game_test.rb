@@ -28,6 +28,17 @@ module TTT
       end
     end
 
+    def test_ask_user_for_next_move
+      f = StringIO.new
+      withIO(StringIO.new("3\n"), f) do
+        out, err = capture_io do
+          assert_equal(3, @game.ask_user_for_next_move)
+        end
+        assert_match(/What's your next move/, out)
+        #assert_match(SIDE_X, @game.user_side)
+      end
+    end
+
 
     def test_starts_the_game_with_pompt
       f = StringIO.new

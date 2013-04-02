@@ -20,6 +20,7 @@ module TTT
     end
 
     def valid_move?(position)
+      position = position.to_i if !position.is_a?(Integer)
       @states[position-1] == 0
     end
 
