@@ -60,7 +60,6 @@ module TTT
     end
 
     def display_game_result
-      display_board   #TODO move it to the bottom of the method
       status = @board_controller.game_status
       puts "GAME OVER!".center(PROMPT_WIDTH, "=")
       puts status.center(PROMPT_WIDTH, "+")
@@ -97,18 +96,18 @@ module TTT
     def ask_user_for_next_move
       puts ">Your turn:"
       puts "What's your next move? Type in the position(Type 'exit' or 'e' to exit)."
-      input = $stdin.gets
-      if input != nil && (input.downcase.chomp[0] == 'e')
+      input = $stdin.gets.chomp.downcase
+      if input.chomp[0] == 'e'
         @exiting = true
         return
       end
-      if input != nil && input.chomp!.length == 1 && @board_controller.valid_move?(input.to_i)
+      input = input.to_i
+      if input != 0 && @board_controller.valid_move?(input)
         input
       else
         show_invalid_move_prompt
-        input = ask_user_for_next_move
+        ask_user_for_next_move
       end
-      input.to_i
     end
 
     def show_invalid_move_prompt

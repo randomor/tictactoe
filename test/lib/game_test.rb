@@ -41,11 +41,11 @@ module TTT
     def test_ask_user_for_next_move_until_move_valid
       f = StringIO.new
       @game.board_controller.next_move(3)
-      withIO(StringIO.new("3\n10\n3\n6\n"), f) do
+      withIO(StringIO.new("3\n10\n3\ndou\n6\n"), f) do
         out, err = capture_io do
           assert_equal(6, @game.ask_user_for_next_move)
         end
-        assert_equal(3, out.scan(/try again/).count)
+        assert_equal(4, out.scan(/try again/).count)
       end
     end
 
