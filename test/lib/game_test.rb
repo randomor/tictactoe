@@ -35,7 +35,17 @@ module TTT
           assert_equal(3, @game.ask_user_for_next_move)
         end
         assert_match(/What's your next move/, out)
-        #assert_match(SIDE_X, @game.user_side)
+      end
+    end
+
+    def test_ask_user_for_next_move_until_move_valid
+      f = StringIO.new
+      @game.board_controller.next_move(3)
+      withIO(StringIO.new("3\n10\n3\n6\n"), f) do
+        out, err = capture_io do
+          assert_equal(6, @game.ask_user_for_next_move)
+        end
+        assert_equal(3, out.scan(/try again/).count)
       end
     end
 
