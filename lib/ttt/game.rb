@@ -54,18 +54,18 @@ module TTT
 
     def display_game_result
       puts "GAME OVER!".center(PROMPT_WIDTH, "=")
-      puts game_result_to_user.center(PROMPT_WIDTH, "+")
+      puts game_result_to_user(@board_controller.game_status).center(PROMPT_WIDTH, "+")
       puts "GAME OVER!".center(PROMPT_WIDTH, "=")
       replay_game
     end
 
-    def game_result_to_user
+    def game_result_to_user(status)
       result_string = ''
-      case @board_controller.game_status
+      case status
       when :X_won
-        result_string = @user_side == SIDE_X ? "You win!" : "You lose!"
+        result_string = @user_side == SIDE_X ? "You won!" : "You lose!"
       when :O_won
-        result_string = @user_side == SIDE_O ? "You win!" : "You lose!"
+        result_string = @user_side == SIDE_O ? "You won!" : "You lose!"
       when :Tie
         result_string = "It's a tie!"
       else

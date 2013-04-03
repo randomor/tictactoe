@@ -152,5 +152,26 @@ module TTT
         assert_equal(SIDE_O, @game.user_side)
       end
     end
+
+    def test_game_result_to_user
+      assert_match(SIDE_X, @game.user_side)
+      assert_match(/Still Playing/, @game.game_result_to_user(:Playing))
+      assert_match(/won/, @game.game_result_to_user(:X_won))
+      assert_match(/lose/, @game.game_result_to_user(:O_won))
+      assert_match(/tie/, @game.game_result_to_user(:Tie))
+
+      
+      f = StringIO.new
+      withIO(StringIO.new("o\n"), f) do
+        out, err = capture_io do
+          @game.get_side_from_user
+        end
+        assert_match(/You picked 'o'/, out)
+      end
+      assert_match(SIDE_O, @game.user_side)
+      assert_match(/lose/, @game.game_result_to_user(:X_won))
+      assert_match(/won/, @game.game_result_to_user(:O_won))
+      assert_match(/tie/, @game.game_result_to_user(:Tie))
+    end
   end
 end
