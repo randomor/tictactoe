@@ -69,7 +69,7 @@ module TTT
       when :Tie
         result_string = "It's a tie!"
       else
-        result_string = "Still Playing"
+        result_string = "Still Playing..."
       end
       result_string
     end
