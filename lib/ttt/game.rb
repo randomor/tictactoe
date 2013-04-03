@@ -21,7 +21,7 @@ module TTT
       display_board
       until @board_controller.game_status != :Playing || @exiting
         play_next
-        display_board
+        display_board unless @exiting
       end
       display_game_result unless @exiting
     end
@@ -40,7 +40,7 @@ module TTT
     end
 
     def display_board
-      puts @board_controller.board
+      puts @board_controller.render_view
     end
 
     def user_move
@@ -53,11 +53,25 @@ module TTT
     end
 
     def display_game_result
-      status = @board_controller.game_status
       puts "GAME OVER!".center(PROMPT_WIDTH, "=")
-      puts status.center(PROMPT_WIDTH, "+")
+      puts game_result_to_user.center(PROMPT_WIDTH, "+")
       puts "GAME OVER!".center(PROMPT_WIDTH, "=")
       replay_game
+    end
+
+    def game_result_to_user
+      result_string = ''
+      case @board_controller.game_status
+      when :X_won
+        result_string = @user_side == SIDE_X ? "You win!" : "You lose!"
+      when :O_won
+        result_string = @user_side == SIDE_O ? "You win!" : "You lose!"
+      when :Tie
+        result_string = "It's a tie!"
+      else
+        result_string = "Still Playing"
+      end
+      result_string
     end
 
     def replay_game
@@ -86,7 +100,7 @@ module TTT
 
     def calculate_computer_move
       @ai ||= AI.new
-      @ai.generate_next_move(@board_controller.states, @current_player)
+      @ai.generate_next_move(@board_controller.board_model, @current_player)
     end
 
     def ask_user_for_next_move

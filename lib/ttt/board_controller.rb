@@ -1,13 +1,13 @@
 # encoding: utf-8
 module TTT
   class BoardController
-    attr_reader :current_mover, :game_status, :states
+    attr_reader :current_mover, :game_status, :board_model
 
     def initialize(states_array=[0,0,0,0,0,0,0,0,0])
-      @states = states_array
+      @board_model = states_array
       @current_mover = SIDE_X
       @game_status = :Playing
-      @board = <<-board.gsub(/^\s+/, '')
+      @board_view = <<-board.gsub(/^\s+/, '')
         ┌===========┐
         ¦ 1 | 2 | 3 ¦
         ¦——— ——— ———¦
@@ -20,7 +20,7 @@ module TTT
 
     def valid_move?(position)
       position = position.to_i if !position.is_a?(Integer)
-      @states[position-1] == 0
+      @board_model[position-1] == 0
     end
 
     def next_move(position)
@@ -29,31 +29,31 @@ module TTT
       else
         raise Errors::InvalidMoveError
       end
-      if @states[index] != 0
+      if @board_model[index] != 0
         raise Errors::InvalidMoveError
       else
-        @states[index] = @current_mover
+        @board_model[index] = @current_mover
         update_game_status(@current_mover)
         switch_current_mover
       end
     end
 
-    def board
-      @states.each_with_index do |s, i|
+    def render_view
+      @board_model.each_with_index do |s, i|
         index_string = (i+1).to_s
-        @board.sub!(index_string, s) if BOTH_SIDES.include?(s)
+        @board_view.sub!(index_string, s) if BOTH_SIDES.include?(s)
       end
-      @board
+      @board_view
     end
 
     private
 
       def update_game_status(current_mover)
-        states_array = @states.each_slice(3).to_a
+        states_array = @board_model.each_slice(3).to_a
         states_array.each_with_index do |row, row_number|
           if row.count(current_mover) == 3 || states_array.transpose[row_number].count(current_mover) == 3 || [states_array[0][0], states_array[1][1], states_array[2][2]].count(current_mover) == 3|| [states_array[0][2], states_array[1][1], states_array[2][0]].count(current_mover) == 3
             @game_status = current_mover == SIDE_X ? :X_won : :O_won
-          elsif @states.count(0) == 0
+          elsif @board_model.count(0) == 0
             @game_status = :Tie
           end
         end

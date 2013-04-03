@@ -9,7 +9,7 @@ module TTT
     end
 
     def test_controller_properties
-      assert_respond_to(@board_controller, :board)
+      assert_respond_to(@board_controller, :render_view)
       assert_equal(@board_controller.current_mover, SIDE_X)
       assert_equal(@board_controller.game_status, :Playing)
     end
@@ -32,7 +32,7 @@ module TTT
         ¦ 7 | 8 | 9 ¦
         ¦===========¦
       board
-      assert_match(board, @board_controller.board)
+      assert_match(board, @board_controller.render_view)
     end
 
     def test_next_move
@@ -48,7 +48,7 @@ module TTT
         ¦===========¦
       board
       assert_match(SIDE_O, @board_controller.current_mover)
-      assert_match(board, @board_controller.board)
+      assert_match(board, @board_controller.render_view)
     end
 
     def test_next_invalid_move
@@ -66,7 +66,7 @@ module TTT
         @board_controller.next_move(3)
       end
       assert_equal(SIDE_O, @board_controller.current_mover)
-      assert_match(board, @board_controller.board)
+      assert_match(board, @board_controller.render_view)
       assert_equal(@board_controller.game_status, :Playing)
     end
 
@@ -82,7 +82,7 @@ module TTT
         ¦===========¦
       board
       @board_controller.next_move(2)
-      assert_match(start_board, @board_controller.board)
+      assert_match(start_board, @board_controller.render_view)
       @board_controller.next_move(1)
       @board_controller.next_move(5)
       @board_controller.next_move(4)
@@ -97,7 +97,7 @@ module TTT
         ¦ 7 | x | 9 ¦
         ¦===========¦
       board
-      assert_match(end_board, @board_controller.board)
+      assert_match(end_board, @board_controller.render_view)
       assert_equal(:X_won, @board_controller.game_status)
     end
 
@@ -113,7 +113,7 @@ module TTT
       board
       @o_board_controller = BoardController.new
       @o_board_controller.next_move(9)
-      assert_match(start_board, @o_board_controller.board)
+      assert_match(start_board, @o_board_controller.render_view)
       @o_board_controller.next_move(1)
       @o_board_controller.next_move(5)
       @o_board_controller.next_move(3)
@@ -129,7 +129,7 @@ module TTT
         ¦ 7 | x | x ¦
         ¦===========¦
       board
-      assert_match(end_board, @o_board_controller.board)
+      assert_match(end_board, @o_board_controller.render_view)
       assert_equal(:O_won, @o_board_controller.game_status)
     end
 
@@ -144,7 +144,7 @@ module TTT
         ¦===========¦
       board
       @board_controller.next_move(9)
-      assert_match(start_board, @board_controller.board)
+      assert_match(start_board, @board_controller.render_view)
       @board_controller.next_move(1)
       @board_controller.next_move(4)
       @board_controller.next_move(5)
@@ -163,7 +163,7 @@ module TTT
         ¦ o | x | x ¦
         ¦===========¦
       board
-      assert_match(end_board, @board_controller.board)
+      assert_match(end_board, @board_controller.render_view)
       assert_equal(:Tie, @board_controller.game_status)
     end
 
@@ -178,7 +178,7 @@ module TTT
         ¦===========¦
       board
       @board_controller.next_move(1)
-      assert_match(start_board, @board_controller.board)
+      assert_match(start_board, @board_controller.render_view)
       @board_controller.next_move(5)
       @board_controller.next_move(2)
       @board_controller.next_move(3)
@@ -194,7 +194,7 @@ module TTT
         ¦ o | 8 | 9 ¦
         ¦===========¦
       board
-      assert_match(end_board, @board_controller.board)
+      assert_match(end_board, @board_controller.render_view)
       assert_equal(:O_won, @board_controller.game_status)
     end
 
@@ -209,7 +209,7 @@ module TTT
         ¦===========¦
       board
       @board_controller.next_move(1)
-      assert_match(start_board, @board_controller.board)
+      assert_match(start_board, @board_controller.render_view)
       @board_controller.next_move(2)
       @board_controller.next_move(5)
       @board_controller.next_move(6)
@@ -224,7 +224,7 @@ module TTT
         ¦ 7 | 8 | x ¦
         ¦===========¦
       board
-      assert_match(end_board, @board_controller.board)
+      assert_match(end_board, @board_controller.render_view)
       assert_equal(:X_won, @board_controller.game_status)
     end
   end
