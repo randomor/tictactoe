@@ -49,8 +49,7 @@ module TTT
       end
     end
 
-
-    def test_starts_the_game_with_pompt
+    def test_start_prompt
       f = StringIO.new
       withIO(StringIO.new("x\nexit\n"), f) do
         out, err = capture_io do
@@ -88,15 +87,15 @@ module TTT
       end
     end
 
-    def test_pick_side_and_wrong_move_twice
+    def test_pick_side_and_multiple_wrong_move
       f = StringIO.new
-      withIO(StringIO.new("o\nd\nx\n3\nexit\n"), f) do
+      withIO(StringIO.new("o\nd\nx\n3\n3\nexit\n"), f) do
         out, err = capture_io do
           @game.start
         end
         assert_match(/You picked 'o'/, out)
         assert_match(/next move?/, out)
-        assert_equal(2, out.scan(/not a valid move! Please try again/).count)
+        assert_equal(3, out.scan(/not a valid move! Please try again/).count)
       end
     end
 

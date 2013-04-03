@@ -114,13 +114,9 @@ module TTT
       if input != 0 && @board_controller.valid_move?(input)
         input
       else
-        show_invalid_move_prompt
+        puts "That was not a valid move! Please try again."
         ask_user_for_next_move
       end
-    end
-
-    def show_invalid_move_prompt
-      puts "That was not a valid move! Please try again."
     end
 
     def get_side_from_user
@@ -136,7 +132,7 @@ module TTT
     end
 
     def start_prompt
-      $stdout.puts <<-PROMPT.gsub(/^\s+/, '')
+      puts <<-PROMPT.gsub(/^\s+/, '')
         | Wanna play Tic-Tac-Toe?
         | Align "x" or "o" to horizontal, vertical or diagonal lines in 3 to win.
       PROMPT
