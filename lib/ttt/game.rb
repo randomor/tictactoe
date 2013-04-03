@@ -124,6 +124,7 @@ module TTT
       input = $stdin.gets.chomp.downcase
       if input.length == 1 && BOTH_SIDES.include?(input)
         @user_side = input
+        @current_player = SIDE_X
         puts "You picked '#{@user_side}'"
       else
         puts 'Invalid pick, pick again please.'
