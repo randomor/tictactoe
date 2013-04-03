@@ -15,6 +15,7 @@ module TTT
         end
         assert_match(/You picked 'x'/, out)
         assert_match(SIDE_X, @game.user_side)
+        assert_match(SIDE_X, @game.current_player)
       end
 
       f = StringIO.new
@@ -25,6 +26,7 @@ module TTT
         assert_equal(2, out.scan(/Invalid pick, pick again please./).count)
         assert_match(/You picked 'o'/, out)
         assert_match(SIDE_O, @game.user_side)
+        assert_match(SIDE_X, @game.current_player)
       end
     end
 
@@ -109,6 +111,45 @@ module TTT
         assert_match(/Which side/, out)
         assert_match(/You picked 'o'/, out)
         assert_match(/Computer moved/, out)
+      end
+    end
+
+    def test_replay_game
+      f = StringIO.new
+      withIO(StringIO.new("o\ny\no\nexit\n"), f) do
+        out, err = capture_io do
+          @game.replay_game
+        end
+        assert_match(/a reply/, out)
+        assert_match(/could not understand/, out)
+        assert_match(/Which side/, out)
+        assert_match(/You picked 'o'/, out)
+        assert_match(/Computer moved/, out)
+        refute_match(1, out.scan(/Your turn/).count)
+      end
+    end
+
+    def test_replay_game_after_selecting_side_x
+      f = StringIO.new
+      withIO(StringIO.new("x\n"), f) do
+        out, err = capture_io do
+          @game.get_side_from_user
+        end
+        assert_match(/You picked 'x'/, out)
+        assert_match(SIDE_X, @game.user_side)
+        assert_match(SIDE_X, @game.current_player)
+      end
+      withIO(StringIO.new("o\ny\no\nexit\n"), f) do
+        out, err = capture_io do
+          @game.replay_game
+        end
+        assert_match(/a reply/, out)
+        assert_match(/could not understand/, out)
+        assert_match(/Which side/, out)
+        assert_match(/You picked 'o'/, out)
+        assert_match(/Computer moved/, out)
+        refute_match(1, out.scan(/Your turn/).count)
+        assert_equal(SIDE_O, @game.user_side)
       end
     end
   end

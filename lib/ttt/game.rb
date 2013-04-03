@@ -2,7 +2,7 @@
 module TTT
   class Game
     PROMPT_WIDTH = 60
-    attr_reader :board_controller, :user_side
+    attr_reader :board_controller, :user_side, :current_player
 
     def initialize
       @user_side = @current_player = SIDE_X
