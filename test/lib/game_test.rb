@@ -160,7 +160,6 @@ module TTT
       assert_match(/lose/, @game.game_result_to_user(:O_won))
       assert_match(/tie/, @game.game_result_to_user(:Tie))
 
-      
       f = StringIO.new
       withIO(StringIO.new("o\n"), f) do
         out, err = capture_io do
