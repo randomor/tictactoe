@@ -7,15 +7,6 @@ module TTT
       @board_model = states_array
       @current_mover = SIDE_X
       @game_status = :Playing
-      @board_view = <<-board.gsub(/^\s+/, '')
-        ┌===========┐
-        ¦ 1 | 2 | 3 ¦
-        ¦——— ——— ———¦
-        ¦ 4 | 5 | 6 ¦
-        ¦––– ––– –––¦
-        ¦ 7 | 8 | 9 ¦
-        ¦===========¦
-      board
     end
 
     def valid_move?(position)
@@ -39,11 +30,20 @@ module TTT
     end
 
     def render_view
+      board_view = <<-board.gsub(/^\s+/, '')
+        ┌===========┐
+        ¦ 1 | 2 | 3 ¦
+        ¦——— ——— ———¦
+        ¦ 4 | 5 | 6 ¦
+        ¦––– ––– –––¦
+        ¦ 7 | 8 | 9 ¦
+        ¦===========¦
+      board
       @board_model.each_with_index do |s, i|
         index_string = (i+1).to_s
-        @board_view.sub!(index_string, s) if BOTH_SIDES.include?(s)
+        board_view.sub!(index_string, s) if BOTH_SIDES.include?(s)
       end
-      @board_view
+      board_view
     end
 
     private
