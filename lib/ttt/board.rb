@@ -2,8 +2,8 @@ module TTT
   class Board
     attr_reader :states
 
-    def initialize
-      @states = [0,0,0,0,0,0,0,0,0]
+    def initialize(states = [0,0,0,0,0,0,0,0,0])
+      @states = states
     end
 
     def []=(position, value)
