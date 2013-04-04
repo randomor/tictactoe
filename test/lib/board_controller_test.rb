@@ -35,58 +35,28 @@ module TTT
       assert_match(board, @board_controller.render_view)
     end
 
-    def test_next_move
+    def test_next_move_switch_current_mover
       assert_match(SIDE_X, @board_controller.current_mover)
       @board_controller.next_move(3)
-      board = <<-board.gsub(/^\s+/, '')
-        ┌===========┐
-        ¦ 1 | 2 | x ¦
-        ¦——— ——— ———¦
-        ¦ 4 | 5 | 6 ¦
-        ¦––– ––– –––¦
-        ¦ 7 | 8 | 9 ¦
-        ¦===========¦
-      board
       assert_match(SIDE_O, @board_controller.current_mover)
-      assert_match(board, @board_controller.render_view)
     end
 
-    def test_next_invalid_move
-      board = <<-board.gsub(/^\s+/, '')
-        ┌===========┐
-        ¦ 1 | 2 | x ¦
-        ¦——— ——— ———¦
-        ¦ 4 | 5 | 6 ¦
-        ¦––– ––– –––¦
-        ¦ 7 | 8 | 9 ¦
-        ¦===========¦
-      board
+    def test_next_invalid_move_not_switch_current_mover
+      @board_controller.next_move(3)
+      assert_equal(SIDE_O, @board_controller.current_mover)
       assert_raises(Errors::InvalidMoveError) do
-        @board_controller.next_move(3)
         @board_controller.next_move(3)
       end
       assert_equal(SIDE_O, @board_controller.current_mover)
-      assert_match(board, @board_controller.render_view)
-      assert_equal(@board_controller.game_status, :Playing)
     end
 
 
     def test_changes_right_status_when_x_won
-      start_board = <<-board.gsub(/^\s+/, '')
-        ┌===========┐
-        ¦ 1 | x | 3 ¦
-        ¦——— ——— ———¦
-        ¦ 4 | 5 | 6 ¦
-        ¦––– ––– –––¦
-        ¦ 7 | 8 | 9 ¦
-        ¦===========¦
-      board
       @board_controller.next_move(2)
-      assert_match(start_board, @board_controller.render_view)
       @board_controller.next_move(1)
       @board_controller.next_move(5)
       @board_controller.next_move(4)
-      assert_match(/Playing/, @board_controller.game_status)
+      assert_equal(:Playing, @board_controller.game_status)
       @board_controller.next_move(8)
       end_board = <<-board.gsub(/^\s+/, '')
         ┌===========┐
@@ -102,24 +72,13 @@ module TTT
     end
 
     def test_changes_right_status_when_o_won
-      start_board = <<-board.gsub(/^\s+/, '')
-        ┌===========┐
-        ¦ 1 | 2 | 3 ¦
-        ¦——— ——— ———¦
-        ¦ 4 | 5 | 6 ¦
-        ¦––– ––– –––¦
-        ¦ 7 | 8 | x ¦
-        ¦===========¦
-      board
-      @o_board_controller = BoardController.new
-      @o_board_controller.next_move(9)
-      assert_match(start_board, @o_board_controller.render_view)
-      @o_board_controller.next_move(1)
-      @o_board_controller.next_move(5)
-      @o_board_controller.next_move(3)
-      assert_match(/Playing/, @o_board_controller.game_status)
-      @o_board_controller.next_move(8)
-      @o_board_controller.next_move(2)
+      @board_controller.next_move(9)
+      @board_controller.next_move(1)
+      @board_controller.next_move(5)
+      @board_controller.next_move(3)
+      assert_equal(:Playing, @board_controller.game_status)
+      @board_controller.next_move(8)
+      @board_controller.next_move(2)
       end_board = <<-board.gsub(/^\s+/, '')
         ┌===========┐
         ¦ o | o | o ¦
@@ -129,26 +88,16 @@ module TTT
         ¦ 7 | x | x ¦
         ¦===========¦
       board
-      assert_match(end_board, @o_board_controller.render_view)
-      assert_equal(:O_won, @o_board_controller.game_status)
+      assert_match(end_board, @board_controller.render_view)
+      assert_equal(:O_won, @board_controller.game_status)
     end
 
     def test_changes_right_status_when_tie
-      start_board = <<-board.gsub(/^\s+/, '')
-        ┌===========┐
-        ¦ 1 | 2 | 3 ¦
-        ¦——— ——— ———¦
-        ¦ 4 | 5 | 6 ¦
-        ¦––– ––– –––¦
-        ¦ 7 | 8 | x ¦
-        ¦===========¦
-      board
       @board_controller.next_move(9)
-      assert_match(start_board, @board_controller.render_view)
       @board_controller.next_move(1)
       @board_controller.next_move(4)
       @board_controller.next_move(5)
-      assert_match(/Playing/, @board_controller.game_status)
+      assert_equal(:Playing, @board_controller.game_status)
       @board_controller.next_move(8)
       @board_controller.next_move(6)
       @board_controller.next_move(2)
@@ -168,22 +117,12 @@ module TTT
     end
 
     def test_detects_diagonal_winning_status
-      start_board = <<-board.gsub(/^\s+/, '')
-        ┌===========┐
-        ¦ x | 2 | 3 ¦
-        ¦——— ——— ———¦
-        ¦ 4 | 5 | 6 ¦
-        ¦––– ––– –––¦
-        ¦ 7 | 8 | 9 ¦
-        ¦===========¦
-      board
       @board_controller.next_move(1)
-      assert_match(start_board, @board_controller.render_view)
       @board_controller.next_move(5)
       @board_controller.next_move(2)
       @board_controller.next_move(3)
-      assert_match(/Playing/, @board_controller.game_status)
       @board_controller.next_move(6)
+      assert_equal(:Playing, @board_controller.game_status)
       @board_controller.next_move(7)
       end_board = <<-board.gsub(/^\s+/, '')
         ┌===========┐
@@ -199,21 +138,11 @@ module TTT
     end
 
     def test_detects_counter_diagonal_winning_status
-      start_board = <<-board.gsub(/^\s+/, '')
-        ┌===========┐
-        ¦ x | 2 | 3 ¦
-        ¦——— ——— ———¦
-        ¦ 4 | 5 | 6 ¦
-        ¦––– ––– –––¦
-        ¦ 7 | 8 | 9 ¦
-        ¦===========¦
-      board
       @board_controller.next_move(1)
-      assert_match(start_board, @board_controller.render_view)
       @board_controller.next_move(2)
       @board_controller.next_move(5)
       @board_controller.next_move(6)
-      assert_match(/Playing/, @board_controller.game_status)
+      assert_equal(:Playing, @board_controller.game_status)
       @board_controller.next_move(9)
       end_board = <<-board.gsub(/^\s+/, '')
         ┌===========┐
