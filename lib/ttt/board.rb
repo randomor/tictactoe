@@ -31,5 +31,9 @@ module TTT
     def counter_diagnoal_line
       [self[3], self[5], self[7]]
     end
+
+    def empty_position?(position)
+      self[position] == 0
+    end
   end
 end

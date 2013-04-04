@@ -37,5 +37,11 @@ module TTT
       @board[7], @board[3] = SIDE_O, SIDE_X
       assert_equal([SIDE_X, 0, SIDE_O], @board.counter_diagnoal_line)
     end
+
+    def test_empty_position
+      assert(@board.empty_position?(1))
+      @board[3] = SIDE_X
+      refute(@board.empty_position?(3))
+    end
   end
 end
