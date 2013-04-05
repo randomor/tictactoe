@@ -26,16 +26,16 @@ module TTT
       assert_equal([[0, 0, 0],[0, 0, 0],[SIDE_X, 0, 0]], @board.columns)
     end
 
-    def test_diagnoal_line
-      assert_equal([0, 0, 0], @board.diagnoal_line)
+    def test_diagonal_line
+      assert_equal([0, 0, 0], @board.diagonal_line)
       @board[1], @board[5] = SIDE_O, SIDE_X
-      assert_equal([SIDE_O, SIDE_X, 0], @board.diagnoal_line)
+      assert_equal([SIDE_O, SIDE_X, 0], @board.diagonal_line)
     end
 
-    def test_counter_diagnoal_line
-      assert_equal([0, 0, 0], @board.counter_diagnoal_line)
+    def test_counter_diagonal_line
+      assert_equal([0, 0, 0], @board.counter_diagonal_line)
       @board[7], @board[3] = SIDE_O, SIDE_X
-      assert_equal([SIDE_X, 0, SIDE_O], @board.counter_diagnoal_line)
+      assert_equal([SIDE_X, 0, SIDE_O], @board.counter_diagonal_line)
     end
 
     def test_empty_position
@@ -48,6 +48,11 @@ module TTT
       refute(@board.full?)
       @other_board = Board.new([SIDE_X,SIDE_X,SIDE_O,SIDE_O,SIDE_O,SIDE_X,SIDE_O,SIDE_X,SIDE_O])
       assert(@other_board.full?)
+    end
+
+    def test_last_empty_position
+      @other_board = Board.new([SIDE_X,SIDE_X,SIDE_O,SIDE_O,SIDE_O,SIDE_X,0,SIDE_X,SIDE_O])
+      assert_equal(7, @other_board.last_empty_position)
     end
   end
 end

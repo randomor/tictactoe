@@ -24,11 +24,11 @@ module TTT
       rows.transpose
     end
 
-    def diagnoal_line
+    def diagonal_line
       [self[1], self[5], self[9]]
     end
 
-    def counter_diagnoal_line
+    def counter_diagonal_line
       [self[3], self[5], self[7]]
     end
 
@@ -38,6 +38,10 @@ module TTT
 
     def full?
       @states.count(0) == 0
+    end
+
+    def last_empty_position
+      return @states.find_index(0) + 1 if @states.count(0) == 1
     end
   end
 end

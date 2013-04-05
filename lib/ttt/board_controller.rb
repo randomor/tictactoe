@@ -46,8 +46,8 @@ module TTT
       def update_game_status(current_mover)
         rows = @board_model.rows
         columns = @board_model.columns
-        diagnoal = @board_model.diagnoal_line
-        counter_diagnoal = @board_model.counter_diagnoal_line
+        diagnoal = @board_model.diagonal_line
+        counter_diagnoal = @board_model.counter_diagonal_line
         rows.each_with_index do |row, row_number|
           if row.count(current_mover) == 3 || columns[row_number].count(current_mover) == 3 || diagnoal.count(current_mover) == 3 || counter_diagnoal.count(current_mover) == 3
             @game_status = current_mover == SIDE_X ? :X_won : :O_won
