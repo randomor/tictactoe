@@ -54,5 +54,38 @@ module TTT
       @other_board = Board.new([SIDE_X,SIDE_X,SIDE_O,SIDE_O,SIDE_O,SIDE_X,0,SIDE_X,SIDE_O])
       assert_equal(7, @other_board.last_empty_position)
     end
+
+    def test_winning_position_for_side
+      horizontal_winning_states       = [SIDE_X,SIDE_X,0,SIDE_O,SIDE_O,0,0,0,0]
+      board = Board.new(horizontal_winning_states)
+      assert_equal(3, board.winning_position_for_side(SIDE_X))
+      assert_equal(6, board.winning_position_for_side(SIDE_O))
+      vertical_winning_states_for_x   = [SIDE_X,0,0,SIDE_X,SIDE_O,SIDE_O,0,0,0]
+      board = Board.new(vertical_winning_states_for_x)
+      assert_equal(7, board.winning_position_for_side(SIDE_X))
+      vertical_winning_states_for_o   = [SIDE_X, SIDE_O, SIDE_X, 0, SIDE_O, SIDE_X, 0, 0, 0]
+      board = Board.new(vertical_winning_states_for_o)
+      assert_equal(8, board.winning_position_for_side(SIDE_O))
+      diagonal_winning_states         = [SIDE_X,SIDE_O,SIDE_O,SIDE_O,0,SIDE_X,0,SIDE_O,SIDE_X]
+      board = Board.new(diagonal_winning_states)
+      assert_equal(5, board.winning_position_for_side(SIDE_X))
+      counter_diagonal_winning_states = [0,0,SIDE_X,SIDE_O,SIDE_X,0,0,SIDE_O,SIDE_O]
+      board = Board.new(counter_diagonal_winning_states)
+      assert_equal(7, board.winning_position_for_side(SIDE_X))
+    end
+
+    def test_forking_position_for_side
+      board = Board.new [SIDE_X,0,0,SIDE_O,0,0,SIDE_O,SIDE_O,SIDE_X]
+      assert_equal(3, board.forking_position_for_side(SIDE_X))
+      board = Board.new [0,SIDE_X,0,0,SIDE_X,SIDE_O,0,SIDE_O,0]
+      assert_equal(1, board.forking_position_for_side(SIDE_X))
+      board = Board.new [0,SIDE_O,SIDE_X,SIDE_X,0,0,0,0,SIDE_O]
+      assert_equal(5, board.forking_position_for_side(SIDE_X))
+    end
+
+    def test_invalid_forking_positions
+      board = Board.new [SIDE_X,0,0,0,SIDE_O,0,0,0,SIDE_X]
+      assert_includes([2, 4, 6, 8], board.forking_position_for_side(SIDE_X))
+    end
   end
 end
