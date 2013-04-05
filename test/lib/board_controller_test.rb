@@ -16,8 +16,9 @@ module TTT
 
     def test_valid_move
       assert_equal(true, @board_controller.valid_move?(3))
-      @board_controller.next_move(3)
-      assert_equal(false, @board_controller.valid_move?(3))
+      board = Board.new [0,SIDE_X,0,0,0,0,0,0,0]
+      other_board_controller = BoardController.new(board)
+      assert_equal(false, other_board_controller.valid_move?(2))
     end
 
     def test_board_render
@@ -33,6 +34,19 @@ module TTT
         ¦===========¦
       board
       assert_match(board, @board_controller.render_view)
+
+      other_board = <<-board.gsub(/^\s+/, '')
+        ┌===========┐
+        ¦ 1 | x | 3 ¦
+        ¦——— ——— ———¦
+        ¦ o | 5 | 6 ¦
+        ¦––– ––– –––¦
+        ¦ 7 | 8 | 9 ¦
+        ¦===========¦
+      board
+      board = Board.new [0,SIDE_X,0,SIDE_O,0,0,0,0,0]
+      other_board_controller = BoardController.new(board)
+      assert_match(other_board, other_board_controller.render_view)
     end
 
     def test_next_move_switch_current_mover

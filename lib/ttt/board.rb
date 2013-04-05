@@ -35,5 +35,9 @@ module TTT
     def empty_position?(position)
       self[position] == 0
     end
+
+    def full?
+      @states.count(0) == 0
+    end
   end
 end

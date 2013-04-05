@@ -43,5 +43,11 @@ module TTT
       @board[3] = SIDE_X
       refute(@board.empty_position?(3))
     end
+
+    def test_full
+      refute(@board.full?)
+      @other_board = Board.new([SIDE_X,SIDE_X,SIDE_O,SIDE_O,SIDE_O,SIDE_X,SIDE_O,SIDE_X,SIDE_O])
+      assert(@other_board.full?)
+    end
   end
 end
