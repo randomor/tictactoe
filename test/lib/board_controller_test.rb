@@ -72,16 +72,6 @@ module TTT
       @board_controller.next_move(4)
       assert_equal(:Playing, @board_controller.game_status)
       @board_controller.next_move(8)
-      end_board = <<-board.gsub(/^\s+/, '')
-        ┌===========┐
-        ¦ o | x | 3 ¦
-        ¦——— ——— ———¦
-        ¦ o | x | 6 ¦
-        ¦––– ––– –––¦
-        ¦ 7 | x | 9 ¦
-        ¦===========¦
-      board
-      assert_match(end_board, @board_controller.render_view)
       assert_equal(:X_won, @board_controller.game_status)
     end
 
@@ -90,19 +80,9 @@ module TTT
       @board_controller.next_move(1)
       @board_controller.next_move(5)
       @board_controller.next_move(3)
-      assert_equal(:Playing, @board_controller.game_status)
       @board_controller.next_move(8)
+      assert_equal(:Playing, @board_controller.game_status)
       @board_controller.next_move(2)
-      end_board = <<-board.gsub(/^\s+/, '')
-        ┌===========┐
-        ¦ o | o | o ¦
-        ¦——— ——— ———¦
-        ¦ 4 | x | 6 ¦
-        ¦––– ––– –––¦
-        ¦ 7 | x | x ¦
-        ¦===========¦
-      board
-      assert_match(end_board, @board_controller.render_view)
       assert_equal(:O_won, @board_controller.game_status)
     end
 
@@ -111,22 +91,12 @@ module TTT
       @board_controller.next_move(1)
       @board_controller.next_move(4)
       @board_controller.next_move(5)
-      assert_equal(:Playing, @board_controller.game_status)
       @board_controller.next_move(8)
       @board_controller.next_move(6)
       @board_controller.next_move(2)
       @board_controller.next_move(7)
+      assert_equal(:Playing, @board_controller.game_status)
       @board_controller.next_move(3)
-      end_board = <<-board.gsub(/^\s+/, '')
-        ┌===========┐
-        ¦ o | x | x ¦
-        ¦——— ——— ———¦
-        ¦ x | o | o ¦
-        ¦––– ––– –––¦
-        ¦ o | x | x ¦
-        ¦===========¦
-      board
-      assert_match(end_board, @board_controller.render_view)
       assert_equal(:Tie, @board_controller.game_status)
     end
 
@@ -138,16 +108,6 @@ module TTT
       @board_controller.next_move(6)
       assert_equal(:Playing, @board_controller.game_status)
       @board_controller.next_move(7)
-      end_board = <<-board.gsub(/^\s+/, '')
-        ┌===========┐
-        ¦ x | x | o ¦
-        ¦——— ——— ———¦
-        ¦ 4 | o | x ¦
-        ¦––– ––– –––¦
-        ¦ o | 8 | 9 ¦
-        ¦===========¦
-      board
-      assert_match(end_board, @board_controller.render_view)
       assert_equal(:O_won, @board_controller.game_status)
     end
 
@@ -158,16 +118,6 @@ module TTT
       @board_controller.next_move(6)
       assert_equal(:Playing, @board_controller.game_status)
       @board_controller.next_move(9)
-      end_board = <<-board.gsub(/^\s+/, '')
-        ┌===========┐
-        ¦ x | o | 3 ¦
-        ¦——— ——— ———¦
-        ¦ 4 | x | o ¦
-        ¦––– ––– –––¦
-        ¦ 7 | 8 | x ¦
-        ¦===========¦
-      board
-      assert_match(end_board, @board_controller.render_view)
       assert_equal(:X_won, @board_controller.game_status)
     end
   end
