@@ -24,6 +24,10 @@ module TTT
       end
     end
 
+    def game_status
+      @board_model.get_status
+    end
+
     def render_view
       board_view = <<-board.gsub(/^\s+/, '')
         ┌===========┐
@@ -44,6 +48,9 @@ module TTT
     private
 
       def update_game_status(current_mover)
+        # Inputs? current_move = SIDE_X etc.
+        # 
+        # Side effects? (sets @game_status)
         rows = @board_model.rows
         columns = @board_model.columns
         diagnoal = @board_model.diagonal_line

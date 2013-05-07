@@ -107,5 +107,24 @@ module TTT
       end
       return nil
     end
+
+    def get_status
+      # Returns nil if game is still playing.
+      check_status_for(SIDE_X) || check_status_for(SIDE_O) || :Playing
+    end
+
+    def check_status_for(current_mover)
+      # Returns :X_won | O_won | Tie | nil
+      diagnoal = diagonal_line
+      counter_diagnoal = counter_diagonal_line
+      rows.each_with_index do |row, row_number|
+        if row.count(current_mover) == 3 || columns[row_number].count(current_mover) == 3 || diagnoal.count(current_mover) == 3 || counter_diagnoal.count(current_mover) == 3
+          return current_mover == SIDE_X ? :X_won : :O_won
+        elsif full?
+          return :Tie
+        end
+      end
+      nil
+    end
   end
 end
